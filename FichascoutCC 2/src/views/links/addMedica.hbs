@@ -1,0 +1,81 @@
+<div class="container p-4">
+    <div class="row">
+        
+        <div class="col">
+
+            <div class="card">
+                <div class="card-body">
+                    <form action="/links/addMedica" method="POST">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label for="opcion">Tipo de Sangre</label>
+                                    <select class="form-control" id="opcion" name="sangre">
+                                        <option>Positivo</option>
+                                        <option>Negativo</option>
+                                    </select>    
+                                </div>
+                                <div class="col form-group">
+                                    <label for="opcion">Prevision</label>
+                                    <select class="form-control" id="opcion" name="prevision">
+                                        <option>Fonaza</option>
+                                        <option>Isapre</option>
+                                        <option>FFAA</option>
+                                    </select>    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" name="estatura" class="form-control" placeholder="Estatura">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="peso" class="form-control" placeholder="Peso Kg">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="telefono_eme" class="form-control" placeholder="Telefono de Emergencia">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="nombre_tel_eme" class="form-control" placeholder="Nombre del telefono de Emergencia">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" name="seguro" class="form-control" placeholder="Seguro">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="institucion" class="form-control" placeholder="Institucion">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="fecha_u_cd" class="form-control" placeholder="Fecha ultimo Control Dental">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" name="contacto_medi" class="form-control" placeholder="Contacto Medico">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="nombre_medi" class="form-control" placeholder="Nombre del Medico">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="consultorio" class="form-control" placeholder="Consultorio">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,115 @@
+{{#each datosProfile}}
+<div class="container p-4">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card text-center">
+        <div class="card-header">
+          <h3>{{grupo}}</h3>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col">Unidad</th>
+                            <th scope="col">Participantes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-info">
+                            <th scope="row">Golondrinas</th>
+                            <td>{{cantidadG}}</td>
+                            </tr>
+                            <tr class="table-warning">
+                            <th scope="row">Lobatos</th>
+                            <td>{{cantidadL}}</td>
+                            </tr>
+                            <tr class="table-primary">
+                            <th scope="row">Compañia</th>
+                            <td>{{cantidadC}}</td>
+                            </tr>
+                            <tr class="table-success">
+                            <th scope="row">Tropa</th>
+                            <td>{{cantidadT}}</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">Avanzada</th>
+                            <td>{{cantidadA}}</td>
+                            </tr>
+                            <tr class="table-danger">
+                            <th scope="row">Clan</th>
+                            <td>{{cantidadClan}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card-body">
+                    <div class="form-group ">
+                        <div class="h2">Tus Dirigentes a cargo</div>
+                    </div>
+                    <div align="left" class="p-2">
+                        <div class="h6">1.-</div>
+                    </div>
+                    <div align="left" class="p-2">
+                        <div class="h6">2.-</div>
+                    </div>
+                    <div align="left" class="p-2">
+                        <div class="h6">3.-</div>
+                    </div>
+                    <div class="row">
+                        <div class="mx-auto">
+                            <a href="links/edit/{{rut}}" class="btn btn-warning btn-lg active mx-auto" role="button" aria-pressed="true">Editar Datos Personales</a>
+                        </div>
+                        <div class="p-2 mx-auto">
+                            <a href="/links/editMedica/{{rut}}" class="btn btn-success btn-lg active mx-auto" role="button" aria-pressed="true">Editar Ficha Medica</a>
+                        </div>
+                        <div class="p-2 mx-auto">
+                            <a href="links/addExtra" class="btn btn-info btn-lg active mx-auto" role="button" aria-pressed="true">Complementar Ficha Medica</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 mx-auto">
+      <div class="card text-center">
+        <div class="card-header">
+          <h3>Mi Perfil</h3>
+        </div>
+        <div>
+            <img src="/img/{{unidad}}.jpg" alt="Logo Unidad" class="card-img-top mx-auto m-2 rounded-circle w-50" />
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+              <div class="h5">Nombre: {{nombre}}  {{apellido}}</div>
+            </div>
+            <div class="form-group">
+              <div class="h5">Participante en {{unidad}} del Grupo {{grupo}} </div>
+            </div>
+            <div>
+                <div class="h5">Distrito: {{distrito}}.</div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+{{else}}
+<div class="col-md-4 mx-auto">
+    <div class="card card-body text-center">
+        <p>No tienes datos de perfil</p>
+        <a href="/links/add" class="btn btn-info btn-lg active" role="button" aria-pressed="true">Rellenalos ya!</a>
+    </div>
+</div>
+
+{{/each}}

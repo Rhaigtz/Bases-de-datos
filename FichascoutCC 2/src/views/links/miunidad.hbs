@@ -1,0 +1,45 @@
+<div class="container p-4">
+    <div class="col">
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col"><div class="h3">Rut</div></div>
+                            <div class="col"><div class="h3">Nombre</div></div>
+                            <div class="col"><div class="h3">Apellido</div></div>
+                            <div class="col"><div class="h3">Unidad</div></div>
+                            <div class="col"><div class="h3"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{#each links}}
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">{{rut}}</div>
+                            <div class="col">{{nombre}}</div>
+                            <div class="col">{{apellido}}</div>
+                            <div class="col">{{unidad}}</div>
+                            <a class="btn btn-info" href="/links/ficha/{{rut}}">
+                                Mirar Ficha
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="col-md-4 mx-auto">
+            <div class="card card-body text-center">
+                <p>No Eres Dirigente :(</p>
+                <a href="/links">Volver</a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

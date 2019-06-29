@@ -1,0 +1,111 @@
+<div class="container p-4 ">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="col form_group">
+                <div class="h1">Importante</div>
+            </div>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Opcion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Medicamentos</td>
+                        <td>debes colocar Medicamentos</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Alergia</td>
+                        <td>elige entre alerga a "medicamentos","plantas","alimentos","otra"</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Intolerancia</td>
+                        <td>elige si eres intolerante a "lactosa", "gluten", "otra"</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Enfermedad</td>
+                        <td>las opciones son "litiasis", "tiroides", "epilepcia", "diabetes1", "diabetes2", "asma", "hipertension", "cardiaca", "otra"</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>Traumatico</td>
+                        <td>"fractura", "esguinse", "luxacion", "otra"</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td>Psicologico</td>
+                        <td>debes colocar Psicologico</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-6 p-5">
+
+            <div class="card">
+                <div class="card-body">
+                    <form action="/links/addExtra" method="POST">
+                        <div class="form-group">
+                            <label for="opcion">Elige entre las distintas opciones</label>
+                            <select class="form-control" id="opcion" name="opcion">
+                            <optgroup label="Medicamentos">
+                                <option name="Medicamentos">Medicamentos</option>
+                            </optgroup>
+                            <optgroup label="Alergias">
+                                <option>MedicamentosAlergia</option>
+                                <option>Plantas</option>
+                                <option>Alimentos</option>
+                                <option>Otra Alergia</option>
+                            </optgroup>
+                            <optgroup label="Intolerancia">
+                                <option>Lactosa</option>
+                                <option>Gluten</option>
+                                <option>Otra Intolerancia</option>
+                            </optgroup>
+                            <optgroup label="Enfermedad">
+                                <option>Litiasis</option>
+                                <option>Tiroides</option>
+                                <option>Epilepcia</option>
+                                <option>Diabetes1</option>
+                                <option>Diabetes2</option>
+                                <option>Asma</option>
+                                <option>Hipertension</option>
+                                <option>Cardiaca</option>
+                                <option>Otra Enfermedad</option>
+                            </optgroup>
+                            <optgroup label="Traumatico">
+                                <option>Fractura</option>
+                                <option>Esguinse</option>
+                                <option>Luxacion</option>
+                                <option>Otra Traumatico</option>
+                            </optgroup>
+                            <optgroup label="Psicologico">
+                                <option>Psicologico</option>
+                            </optgroup>
+                            </select>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <textarea type="text" name="especifique" rows="5" class="form-control" >Especificar a Detalle...</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Enviar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

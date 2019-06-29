@@ -1,0 +1,151 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/links/add" method="POST">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" name="nombre" class="form-control" placeholder="Nombre" autofocus>
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="apellido" class="form-control" placeholder="Apellido">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="ciudad" class="form-control" placeholder="Ciudad">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" name="poblacion" class="form-control" placeholder="Poblacion/villa/otro">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="calle" class="form-control" placeholder="Calle">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="numero_c" class="form-control" placeholder="Numero">
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" name="fecha_nac" class="form-control" placeholder="Fecha Nacimiento YYYY-MM-DD">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="lugar_nac" class="form-control" placeholder="Lugar Nacimiento">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="grupo" class="form-control" placeholder="Grupo">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="ciudad_grupo" class="form-control" placeholder="Ciudad del Grupo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                
+                                <div class="col form-group">
+                                    <label for="opcion">Sexo</label>
+                                    <select class="form-control" id="opcion" name="sexo">
+                                        <option>Masculino</option>
+                                        <option>Femenino</option>
+                                    </select>    
+                                </div>
+                                <div class="col form-group">
+                                    <label for="opcion">Unidad</label>
+                                    <select class="form-control" id="opcion" name="unidad">
+                                        <option>Golondrinas</option>
+                                        <option>Lobatos</option>
+                                        <option>Compañia</option>
+                                        <option>Tropa</option>
+                                        <option>Avanzada</option>
+                                        <option>Clan</option>
+                                    </select>    
+                                </div>
+                                <div class="col form-group">
+                                    <label for="opcion">Distrito</label>
+                                    <select class="form-control" id="opcion" name="distrito">
+                                        <option>Melipilla</option>
+                                        <option>La Cisterna</option>
+                                        <option>La Granja</option>
+                                        <option>Bellavista</option>
+                                        <option>AricayParinacota</option>
+                                        <option>BioBio</option>
+                                        <option>Macul</option>
+                                        <option>La Portada</option>
+                                        <option>Alto Hospicio</option>
+                                        <option>La Portada</option>
+                                        <option>Colina</option>
+                                        <option>Cerro Tarapaca</option>
+                                        <option>Cavancha Iquique</option>
+                                        <option>Santiago Centro</option>
+                                        <option>Peñañolen</option>
+                                        <option>Providencia</option>
+                                        <option>Conchali</option>
+                                        <option>Copayapu</option>
+                                        <option>Coloso Antofagasta</option>
+                                        <option>Curico</option>
+                                        <option>Chiloe</option>
+                                        <option>Arica</option>
+                                        <option>Apoquindo</option>
+                                        <option>Choapa</option>
+                                        <option>El Bosque</option>
+                                        <option>Jose Francisco Vergara</option>
+                                        <option>Linares</option>
+                                        <option>Maipu Nuevo Extremo</option>
+                                        <option>Mapurayen</option>
+                                        <option>Marga Marga</option>
+                                        <option>Michimalonco</option>
+                                        <option>Nahuelbuta</option>
+                                        <option>Ñielol</option>
+                                        <option>O higgins</option>
+                                        <option>Pedro de Valdivia</option>
+                                        <option>Viña del Mar</option>
+                                        <option>Villa Alemana</option>
+                                        <option>Valparaiso</option>
+                                        <option>Valle del Maipo</option>
+                                        <option>Talcahuano</option>
+                                        <option>Talca</option>
+                                        <option>San Joaquin</option>
+                                        <option>Santa Rosa</option>
+                                        <option>San Bernardo</option>
+                                        <option>San Felipe</option>
+                                        <option>San Antonio</option>
+                                        <option>Quilicura</option>
+                                        <option>Quilamapu</option>
+                                        <option>Puente Alto Poniente</option>
+                                    </select>    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" name="rut_dirigente1" class="form-control" placeholder="Rut Dirigente 1">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="rut_dirigente2" class="form-control" placeholder="Rut Dirigente 2">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="rut_dirigente3" class="form-control" placeholder="Rut Dirigente 3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

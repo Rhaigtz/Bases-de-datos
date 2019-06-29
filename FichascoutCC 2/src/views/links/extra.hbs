@@ -1,0 +1,39 @@
+<div class="container p-4">
+    <div class="row">
+        {{#each misdatosEx}}
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">{{tipo}}</div>
+                            <div class="col">{{especifique}}</div>
+                        </div>
+                    </div>
+                    <a class="btn btn-danger" href="/links/delete/{{rut}}">
+                        Delete Link
+                    </a>
+                    <a class="btn btn-secondary" href="/links/edit/{{rut}}">
+                        Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="mx-auto">
+            <div class="card card-body text-center">
+                <h1>No encontramos nada...</h1>
+                <br>
+                <div>
+                    <img src="/img/bp.jpg" width="192" height="256">
+                </div>
+                <div class="p-4">
+                    <h3>Si tienes alguna Enfermedad, Medicamentos, Trauma, etc.</h3>
+                </div>
+                <a href="/links/addExtra" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Añadelo a tu ficha medica</a>
+                <div class="h4 p-2">Todo por tu Salud</div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
