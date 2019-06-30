@@ -313,6 +313,21 @@ router.post('/addExtra', async (req, res) => {
     req.flash('success', 'Datos Guardados Correctamente');
     res.redirect('/links');
 });
+// Vamos a crear el filtrador en base a "miunidad"
+router.get('/filtrador', isLoggedIn, async (req, res) => {
+    console.log(req.session.passport.user);
+    const links = await pool.query('SELECT * FROM Personas WHERE personas.rut_dirigente1 = ?', [req.session.passport.user]);
+    console.log(links);
+    res.render('links/filtrador', { links });
+});
 
+//Para ver los medicamentos
+router.get('/medicamentos', isLoggedIn, async(req,res) =>{
+    var rutDirigente = req.session.passport.user;
+    console.log('La persona que Tiene la Secion abierta es....');
+    console.log(rutDirigente);
+    var medi = await pool.query('SELECT * FROM especifique,personas WHERE personas.rut_dirigente1 =? AND personas.rut=especifique.rut AND Especifique.tipo="Medicamentos"',[rutDirigente]);
+    res.render('links/medicamentos', {medi});
+});
 
 module.exports = router;
