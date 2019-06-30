@@ -1,2 +1,52 @@
-{{#each linksa}}
-    {{tipo}}
+<div class="container p-4">
+    <div class="col">
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="h1">
+                            Seleccione Filtro de Búsqueda
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{#each links}}
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <a class="btn btn-info" href="/links/medicamentos">
+                                Obtener Medicamentos
+                            </a>
+                            <a class="btn btn-info" href="/links/alergias">
+                                Obtener Alergias
+                            </a>
+                            <a class="btn btn-info" href="/links/intolerancia">
+                                Obtener Intolerancia
+                            </a>
+                            <a class="btn btn-info" href="/links/enfermedad">
+                                Obtener Enfermedad
+                            </a>
+                            <a class="btn btn-info" href="/links/traumatico">
+                                Obtener Traumatico
+                            </a>
+                            <a class="btn btn-info" href="/links/psicologicos">
+                                Obtener Psicologicos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="col-md-4 mx-auto">
+            <div class="card card-body text-center">
+                <p>No Eres Dirigente :(</p>
+                <a href="/links">Volver</a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
