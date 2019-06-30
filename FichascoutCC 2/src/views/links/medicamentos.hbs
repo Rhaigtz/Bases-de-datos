@@ -1,0 +1,38 @@
+<div class="container p-4">
+    <div class="col">
+        <div class="card text-center">
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-8">
+                    <div class="row p-4 justify-content-center">
+                        <h2 align="center">Medicamentos Unidad </h2>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row p-4">
+                <table class="table table-bordered">
+                    <tbody>
+                         {{#each ale}}
+                        <div class="col">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">{{rut}}</div>
+                                            <div class="col">{{tipo}}</div>
+                                            <div class="col">{{opcion}}</div>
+                                            <div class="col">{{especifique}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
