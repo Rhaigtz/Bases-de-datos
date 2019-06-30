@@ -170,7 +170,7 @@ router.post('/edit/:rut', async (req, res) => {
     const { rut } = req.params;
     var rutt = rut;
     console.log(rutt);
-    const { nombre, apellido, sexo, poblacion, calle, numero_c, ciudad, fecha_nac, lugar_nac, unidad, grupo, ciudad_grupo, distrito } = req.body;
+    const { nombre, apellido, sexo, poblacion, calle, numero_c, ciudad, fecha_nac, lugar_nac, unidad, grupo, ciudad_grupo, distrito,rut_dirigente1,rut_dirigente2,rut_dirigente3 } = req.body;
     const newLink = {
         rut: rutt,
         nombre,
@@ -185,7 +185,10 @@ router.post('/edit/:rut', async (req, res) => {
         unidad,
         grupo, 
         ciudad_grupo,
-        distrito
+        distrito,
+        rut_dirigente1,
+        rut_dirigente2,
+        rut_dirigente3
     };
     console.log('los datos recibidos son.......');
     console.log(newLink);
@@ -262,7 +265,7 @@ router.get('/addExtra', async (req, res) => {
 
 router.post('/addExtra', async (req, res) => {
     rutt1 =  req.session.passport.user;
-    const { opcion, especifique } = req.body;
+    const { opcion , especifique } = req.body;
     var tipoo='';
     console.log('Opcion Vale:');
     console.log(opcion);
@@ -312,6 +315,15 @@ router.post('/addExtra', async (req, res) => {
     await pool.query('INSERT INTO especifique set ?', [newEsp]);
     req.flash('success', 'Datos Guardados Correctamente');
     res.redirect('/links');
+});
+
+router.get('/filtrador',isLoggedIn , async(req,res) => {
+    console.log(req.session.passport.user);
+    const links = await pool.query('SELECT especifique.tipo from especifique, ficha where especifique.rut = ficha.rut');
+    console.log(links[0].tipo);
+    const linksa = links[0]
+    res.render('links/filtrador', { linksa });
+    
 });
 
 

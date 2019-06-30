@@ -44,8 +44,15 @@ router.get('/logout', isLoggedIn,(req, res) => {
 router.get('/profile', isLoggedIn, async (req, res) => {
   console.log(req.session.passport.user);
   const datosProfile = await pool.query('SELECT * FROM Personas WHERE personas.rut = ?',[req.session.passport.user]);
+  const cantidadG = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Golondrinas"');
+  const cantidadL = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Lobatos"');
+  const cantidadC = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Lobatos"');
+  const cantidadT = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Lobatos"');
+  const cantidadA = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Lobatos"');
+  const cantidadCL = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Lobatos"');
+
   console.log(datosProfile);
-  res.render('profile', {datosProfile});
+  res.render('profile', {datosProfile, cantidadG, cantidadL,cantidadC,cantidadT,cantidadA,cantidadCL});
 });
 
 module.exports = router;

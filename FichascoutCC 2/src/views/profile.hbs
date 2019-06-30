@@ -6,6 +6,8 @@
         <div class="card-header">
           <h3>{{grupo}}</h3>
         </div>
+        {{/each}}
+        {{#each cantidadG}}
         <div class="row">
             <div class="col-sm-6">
                 <div class="card-body">
@@ -19,45 +21,59 @@
                         <tbody>
                             <tr class="table-info">
                             <th scope="row">Golondrinas</th>
-                            <td>{{cantidadG}}</td>
+                            <td>{{total}}</td>
                             </tr>
+                            {{/each}}
+                            {{#each cantidadL}}
                             <tr class="table-warning">
                             <th scope="row">Lobatos</th>
-                            <td>{{cantidadL}}</td>
+                            <td>{{total}}</td>
                             </tr>
+                            {{/each}}
+                            {{#each cantidadC}}
                             <tr class="table-primary">
                             <th scope="row">Compañia</th>
-                            <td>{{cantidadC}}</td>
+                            <td>{{total}}</td>
                             </tr>
+                            {{/each}}
+                            {{#each cantidadT}}
                             <tr class="table-success">
                             <th scope="row">Tropa</th>
-                            <td>{{cantidadT}}</td>
-                            </tr>
+                            <td>{{total}}</td>
+                            </tr
+                            {{/each}}
+                            {{#each cantidadA}}>
                             <tr>
                             <th scope="row">Avanzada</th>
-                            <td>{{cantidadA}}</td>
+                            <td>{{total}}</td>
                             </tr>
+                            {{/each}}
+                            {{#each cantidadCL}}
                             <tr class="table-danger">
                             <th scope="row">Clan</th>
-                            <td>{{cantidadClan}}</td>
+                            <td>{{total}}</td>
                             </tr>
+                            {{/each}}
+                            {{#each cantidadL}}
                         </tbody>
                     </table>
                 </div>
             </div>
+            {{/each}}
+            {{#each datosProfile}}
             <div class="col-sm-6">
                 <div class="card-body">
                     <div class="form-group ">
                         <div class="h2">Tus Dirigentes a cargo</div>
                     </div>
                     <div align="left" class="p-2">
-                        <div class="h6">1.-</div>
+                        <div class="h6">1.-   {{rut_dirigente1}} </div>
                     </div>
                     <div align="left" class="p-2">
-                        <div class="h6">2.-</div>
+                        <div class="h6">2.- {{rut_dirigente2}} </div>
                     </div>
                     <div align="left" class="p-2">
-                        <div class="h6">3.-</div>
+                        <div class="h6">3.- {{rut_dirigente3}}</div>
                     </div>
                     <div class="row">
                         <div class="mx-auto">

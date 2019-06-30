@@ -4,7 +4,7 @@ module.exports = {
         connectionLimit: 10,
         host: 'localhost',
         user: 'root',
-        password: 'PASSWORD',
+        password: 'opazogana9503',
         database: 'fichascout'
     }
 
