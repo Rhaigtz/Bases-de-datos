@@ -22,7 +22,7 @@ CREATE TABLE Especifique (
     tipo VARCHAR(60) NOT NULL,
     opcion VARCHAR(60) NOT NULL,
     especifique VARCHAR(255),
-    PRIMARY KEY (opcion)
+    PRIMARY KEY (rut,opcion)
 );
 
 CREATE TABLE Personas (
@@ -43,9 +43,6 @@ CREATE TABLE Personas (
     rut_dirigente1 VARCHAR(60),
     rut_dirigente2 VARCHAR(60),
     rut_dirigente3 VARCHAR(60),
-    nom_dir1 VARCHAR(60),
-    nom_dir2 VARCHAR(60),
-    nom_dir3 VARCHAR(60),
     PRIMARY KEY (rut),
     FOREIGN KEY (rut) REFERENCES users(id),
     FOREIGN KEY (distrito) REFERENCES region(distrito_nombre)
@@ -66,7 +63,7 @@ CREATE TABLE Ficha (
     nombre_medi VARCHAR(60) ,
     consultorio VARCHAR(60),
     embarazada VARCHAR(60) DEFAULT 'NO',
-    semanas VARCHAR(60),
+    semanas VARCHAR(60) DEFAULT 'NO',
     embarazo_ant VARCHAR(2) DEFAULT 'NO',
     fur DATE,
     PRIMARY KEY (rut)
