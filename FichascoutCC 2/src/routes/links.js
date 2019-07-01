@@ -56,8 +56,7 @@ router.get('/addMedica', async (req, res) => {
     }
     else{
         console.log('hay datos, asi que añadir detalles')
-        var misdatosEx = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ?',[req.session.passport.user]);
-        res.render('links/extra', { misdatosEx });
+        res.redirect('/profile');
     }
 });
 
