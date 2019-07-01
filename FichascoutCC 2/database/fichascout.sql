@@ -22,7 +22,7 @@ CREATE TABLE Especifique (
     tipo VARCHAR(60) NOT NULL,
     opcion VARCHAR(60) NOT NULL,
     especifique VARCHAR(255),
-    PRIMARY KEY (opcion)
+    PRIMARY KEY (rut,opcion)
 );
 
 CREATE TABLE Personas (
