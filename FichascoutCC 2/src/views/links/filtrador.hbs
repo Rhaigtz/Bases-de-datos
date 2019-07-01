@@ -1,52 +1,113 @@
-<div class="container p-4">
-    <div class="col">
-        <div class="col">
-            <div class="card text-center">
-                <div class="card-body">
+<div class="p-4">
+    <h1 align="center">Seleccione Filtro de Busqueda</h1>
+</div>
+  
+{{#if links}}
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
                     <div class="container">
-                        <div class="h1">
-                            Seleccione Filtro de Búsqueda
-                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col">
+                                    <img src="/img/botiquin.jpg" alt="Logo Unidad" width="200" height="200"  />
+                                    <div class="mx-auto" align="center">
+                                        <a class="btn btn-warning" href="/links/medicamentos">Ver Medicamentos para mi unidad</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col">
+                                    <img src="/img/alergia.png" alt="Logo Unidad" width="200" height="200"  />
+                                    <div class="mx-auto" align="center">
+                                        <a class="btn btn-danger" href="/links/alergias">Ver las Alergias en mi unidad</a>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col">
+                                    <img src="/img/intolerancia.jpg" alt="Logo Unidad" width="200" height="200"  />
+                                    <div class="mx-auto" align="center">
+                                        <a class="btn btn-success" href="/links/intolerancias">Ver las Intolerancias de mi unidad</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            <div class="row p-4">
+                <div class="col">
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col">
+                                    <img src="/img/enfermedades.jpg" alt="Logo Unidad" width="200" height="200"  />
+                                    <div class="mx-auto" align="center">
+                                        <a class="btn btn-success" href="/links/enfermedades">Enfermedades en Mi Unidad</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col">
+                                    <img src="/img/traumatico.jpg" alt="Logo Unidad" width="200" height="200"  />
+                                    <div class="mx-auto" align="center">
+                                        <a class="btn btn-primary" href="/links/traumaticos">Problemas Traumaticos en Mi Unidad</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col">
+                                    <img src="/img/psicologico.png" alt="Logo Unidad" width="200" height="200"  />
+                                    <div class="mx-auto" align="center">
+                                        <a class="btn btn-warning" href="/links/psicologicos">Problemas Psicologicos</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
         </div>
-        {{#if links}}
-        <div class="col">
-            <div class="card text-center">
-                <div class="card-body">
-                    <div class="container">
-                        <div class="row">
-                            <a class="btn btn-info" href="/links/medicamentos">
-                                Obtener Medicamentos
-                            </a>
-                            <a class="btn btn-info" href="/links/alergias">
-                                Obtener Alergias
-                            </a>
-                            <a class="btn btn-info" href="/links/intolerancias">
-                                Obtener Intolerancia
-                            </a>
-                            <a class="btn btn-info" href="/links/enfermedades">
-                                Obtener Enfermedad
-                            </a>
-                            <a class="btn btn-info" href="/links/traumaticos">
-                                Obtener Traumatico
-                            </a>
-                            <a class="btn btn-info" href="/links/psicologicos">
-                                Obtener Psicologicos
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{else}}
-        <div class="col-md-4 mx-auto">
-            <div class="card card-body text-center">
-                <p>No Eres Dirigente :(</p>
-                <a href="/links">Volver</a>
-            </div>
-        </div>
-        {{/if}}
+    </div>
+    
+    
+</div>
+
+
+{{else}}
+<div class="col-md-4 mx-auto">
+    <div class="card card-body text-center">
+        <p>No Eres Dirigente :(</p>
+        <a href="/links">Volver</a>
     </div>
 </div>
+{{/if}}
+
