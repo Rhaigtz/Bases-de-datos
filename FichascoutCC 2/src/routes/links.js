@@ -48,6 +48,7 @@ router.post('/add', async (req, res) => {
 
 router.get('/addMedica', async (req, res) => {
     var misdatosF =  await pool.query('SELECT * FROM ficha WHERE ficha.rut = ?',[req.session.passport.user]);
+    console.log('probando');
     console.log(misdatosF);
     if(misdatosF[0] == null){
         console.log('No hay datos, a rellenar');
@@ -86,8 +87,9 @@ router.post('/addMedica', async (req, res) => {
 
 // para mostrar las personas de mi unidad
 router.get('/miunidad', isLoggedIn, async (req, res) => {
+    console.log('buenas');
     console.log(req.session.passport.user);
-    const links = await pool.query('SELECT * FROM Personas WHERE personas.rut_dirigente1 = ?',[req.session.passport.user]);
+    const links = await pool.query('SELECT * FROM Personas WHERE personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?', [req.session.passport.user, req.session.passport.user, req.session.passport.user]);
     console.log(links);
     res.render('links/miunidad', { links });
 });
@@ -106,7 +108,7 @@ router.get('/ficha/:id', isLoggedIn, async (req, res) => {
     console.log(dir2);
     var dir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
     console.log(dir3);
-    if(rutDirigente== id|| dir1||dir2||dir3){
+    if (rutDirigente == id || rutDirigente == dir1 || rutDirigente == dir2 || rutDirigente == dir3) {
         var links = await pool.query('SELECT * FROM personas, ficha WHERE personas.rut = ficha.rut AND personas.rut = ?', [id]);
         var medi = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Medicamentos"', [id]);
         var ale = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Alergias"', [id]);
@@ -121,10 +123,11 @@ router.get('/ficha/:id', isLoggedIn, async (req, res) => {
     }
     console.log('holi voy a ver la ficha de mis scouts');
     console.log(links);
-    if(links[0]== null)
+    if(links == null)
     {
         console.log('Te redireccionamos ya que no tienes gente a cargo');
-        res.redirect('/profile')
+        res.redirect('/profile');
+        req.flash('success', 'La persona aun no a creado su ficha');
     }
     else{
         console.log('Los datos de Tu Scout Son');
@@ -274,23 +277,23 @@ router.post('/addExtra', async (req, res) => {
         console.log('estoy en Medicamentos');
         tipoo= "Medicamentos";
     }
-    if(opcion == 'MedicamentosAlergia' || 'Plantas' || 'Alimentos' || 'Otra Alergia')
+    if (opcion == 'MedicamentosAlergia' || opcion == 'Plantas' || opcion == 'Alimentos' || opcion == 'Otra Alergia')
     {
         console.log('estoy en Alergias');
         console.log(opcion);
         tipoo= "Alergias";
     }
-    if(opcion == 'Lactosa' || 'Gluten' || 'Otra Intolerancia')
+    if (opcion == 'Lactosa' || opcion == 'Gluten' || opcion == 'Otra Intolerancia')
     {
         console.log('estoy en Intolerancia');
         tipoo= "Intolerancia";
     }
-    if(opcion == 'Litiasis' || 'Tiroides' || 'Epilepcia' || 'Diabetes1' || 'Diabetes2' || 'Asma' || 'Hipertension' || 'Cardiaca' || 'Otra Enfermedad')
+    if (opcion == 'Litiasis' || opcion == 'Tiroides' || opcion == 'Epilepcia' || opcion == 'Diabetes1' || opcion == 'Diabetes2' || opcion == 'Asma' || opcion == 'Hipertension' || opcion == 'Cardiaca' || opcion == 'Otra Enfermedad')
     {
         console.log('estoy en Enfermedad');
         tipoo= "Enfermedad";
     }
-    if(opcion == 'Fractura' || 'Esguinse' || 'Luxacion' || 'Otra Traumatico')
+    if (opcion == 'Fractura' || opcion == 'Esguinse' || opcion == 'Luxacion' || opcion == 'Otra Traumatico')
     {
         console.log('estoy en Traumatico');
         tipoo= "Traumatico";
@@ -322,15 +325,6 @@ router.get('/filtrador', isLoggedIn, async (req, res) => {
     const links = await pool.query('SELECT * FROM Personas WHERE personas.rut_dirigente1 = ?', [req.session.passport.user]);
     console.log(links);
     res.render('links/filtrador', { links });
-});
-
-router.get('/filtrador',isLoggedIn , async(req,res) => {
-    console.log(req.session.passport.user);
-    const links = await pool.query('SELECT especifique.tipo from especifique, ficha where especifique.rut = ficha.rut');
-    console.log(links[0].tipo);
-    const linksa = links[0]
-    res.render('links/filtrador', { linksa });
-    
 });
 
 //Para ver los medicamentos
