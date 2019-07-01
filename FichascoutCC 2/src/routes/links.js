@@ -338,7 +338,7 @@ router.get('/medicamentos', isLoggedIn, async(req,res) =>{
     var rutDirigente = req.session.passport.user;
     console.log('La persona que Tiene la Secion abierta es....');
     console.log(rutDirigente);
-    var medi = await pool.query('SELECT * FROM especifique,personas WHERE personas.rut_dirigente1 =? AND personas.rut=especifique.rut AND Especifique.tipo="Medicamentos"',[rutDirigente]);
+    var medi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.opcion="Medicamentos";');
     res.render('links/medicamentos', {medi});
 });
 
