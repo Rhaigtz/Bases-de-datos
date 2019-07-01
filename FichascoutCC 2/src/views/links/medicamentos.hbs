@@ -15,20 +15,10 @@
                 <table class="table table-bordered">
                     <tbody>
                          {{#each medi}}
-                        <div class="col">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col">{{rut}}</div>
-                                            <div class="col">{{tipo}}</div>
-                                            <div class="col">{{opcion}}</div>
-                                            <div class="col">{{especifique}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <tr>
+                            <td colspan="2">Nombre:{{nombre}}      RUT:{{rut}}</td>
+                            <td colspan="2">{{especifique}}</td>
+                        </tr>
                         {{/each}}
                     </tbody>
                 </table>
