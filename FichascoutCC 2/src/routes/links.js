@@ -107,7 +107,7 @@ router.get('/ficha/:id', isLoggedIn, async (req, res) => {
     console.log(dir2);
     var dir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
     console.log(dir3);
-    if (rutDirigente == id || dir1 || dir2 || dir3) {
+    if (rutDirigente == id || rutDirigente == dir1 || rutDirigente == dir2 || rutDirigente == dir3) {
         console.log('Si tienes Acceso a esta persona....');
         var links = await pool.query('SELECT * FROM personas, ficha WHERE personas.rut = ficha.rut AND personas.rut = ?', [id]);
         var medi = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Medicamentos"', [id]);
@@ -123,7 +123,7 @@ router.get('/ficha/:id', isLoggedIn, async (req, res) => {
     }
     console.log('holi voy a ver la ficha de mis scouts');
     console.log(links);
-    if(links[0] == null)
+    if(links == null)
     {
         console.log('Te redireccionamos ya que no tienes gente a cargo');
         res.redirect('/profile');
@@ -145,9 +145,22 @@ router.get('/', isLoggedIn, async (req, res) => {
 
 router.get('/delete/:id', async (req, res) => {
     const { id } = req.params;
-    await pool.query('DELETE FROM personas WHERE personas.rut = ?', [id]);
-    req.flash('success', 'Link Removed Successfully');
-    res.redirect('/links');
+    const rutedit = req.session.passport.user;
+    const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
+    const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
+    const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
+    if(id==rutedit || rutedit==rutdir1 || rutedit==rutdir2 || rutedit==rutdir3)
+    {
+        console.log('tienes lo permisos');
+        console.log('procederemos a borrar');
+        await pool.query('DELETE FROM personas WHERE personas.rut = ?', [id]);
+        req.flash('success', 'Link Removed Successfully');
+        res.redirect('/links');
+    }
+    else{
+        console.log('NOOO tienes lo permisos');
+        res.redirect('/profile');
+    }
 });
 
 router.get('/edit/:id', async (req, res) => {
@@ -209,7 +222,7 @@ router.get('/editMedica/:rut', async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [rut]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [rut]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [rut]);
-    if( rut==rutedit || rutedit == rutdir1 || rutdir2 || rutdir3 ){
+    if( rut==rutedit || rutedit == rutdir1 || rutedit == rutdir2 || rutedit == rutdir3 ){
         console.log('entre en el IF y soy dirigente o yo mismo....')
         const editandoM = await pool.query('SELECT * FROM ficha WHERE ficha.rut = ?', [rut]);
         console.log('holi');
