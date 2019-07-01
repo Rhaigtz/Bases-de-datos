@@ -349,7 +349,7 @@ router.get('/medicamentos', isLoggedIn, async(req,res) =>{
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
+    if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
         var medi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Medicamentos" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
@@ -368,7 +368,7 @@ router.get('/alergias', isLoggedIn, async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
+    if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
         var ale = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Alergias" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
@@ -387,7 +387,7 @@ router.get('/intolerancias', isLoggedIn, async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
+    if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
         var int = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Intolerancia" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
@@ -406,7 +406,7 @@ router.get('/enfermedades', isLoggedIn, async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
+    if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
         var enf = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Enfermedad" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
@@ -425,7 +425,7 @@ router.get('/traumaticos', isLoggedIn, async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
+    if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
         var tra = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Traumatico" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
@@ -444,7 +444,7 @@ router.get('/psicologicos', isLoggedIn, async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
+    if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
         var psi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Psicologico" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
