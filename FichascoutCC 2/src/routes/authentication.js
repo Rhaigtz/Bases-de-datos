@@ -55,7 +55,7 @@ router.get('/profile', isLoggedIn, async (req, res) => {
   const cantidadCL = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Clan" AND personas.grupo = ?', [gruposki[0].grupo]);
 
   console.log(datosProfile);
-  res.render('profile', {datosProfile, cantidadG, cantidadL,cantidadC,cantidadT,cantidadA,cantidadCL});
+  res.render('/profile', {datosProfile, cantidadG, cantidadL,cantidadC,cantidadT,cantidadA,cantidadCL});
 });
 
 module.exports = router;

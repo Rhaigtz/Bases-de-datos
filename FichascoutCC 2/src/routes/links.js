@@ -108,6 +108,7 @@ router.get('/ficha/:id', isLoggedIn, async (req, res) => {
     var dir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
     console.log(dir3);
     if (rutDirigente == id || dir1 || dir2 || dir3) {
+        console.log('Si tienes Acceso a esta persona....');
         var links = await pool.query('SELECT * FROM personas, ficha WHERE personas.rut = ficha.rut AND personas.rut = ?', [id]);
         var medi = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Medicamentos"', [id]);
         var ale = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Alergias"', [id]);
@@ -122,7 +123,7 @@ router.get('/ficha/:id', isLoggedIn, async (req, res) => {
     }
     console.log('holi voy a ver la ficha de mis scouts');
     console.log(links);
-    if(links == null)
+    if(links[0] == null)
     {
         console.log('Te redireccionamos ya que no tienes gente a cargo');
         res.redirect('/profile');
