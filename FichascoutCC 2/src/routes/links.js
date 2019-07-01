@@ -108,7 +108,7 @@ router.get('/ficha/:id', isLoggedIn, async (req, res) => {
     console.log(dir2);
     var dir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
     console.log(dir3);
-    if (rutDirigente == id || rutDirigente == dir1 || rutDirigente == dir2 || rutDirigente == dir3) {
+    if (rutDirigente == id || dir1 || dir2 || dir3) {
         var links = await pool.query('SELECT * FROM personas, ficha WHERE personas.rut = ficha.rut AND personas.rut = ?', [id]);
         var medi = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Medicamentos"', [id]);
         var ale = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Alergias"', [id]);
@@ -332,7 +332,7 @@ router.get('/medicamentos', isLoggedIn, async(req,res) =>{
     var rutDirigente = req.session.passport.user;
     console.log('La persona que Tiene la Secion abierta es....');
     console.log(rutDirigente);
-    var medi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.opcion="Medicamentos";');
+    var medi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.opcion="Medicamentos" AND Personas.rut_dirigente1=?;',[rutDirigente]);
     res.render('links/medicamentos', {medi});
 });
 
