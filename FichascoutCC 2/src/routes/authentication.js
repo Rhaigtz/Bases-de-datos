@@ -46,16 +46,30 @@ router.get('/profile', isLoggedIn, async (req, res) => {
   const datosProfile = await pool.query('SELECT * FROM Personas WHERE personas.rut = ?',[req.session.passport.user]);
   console.log('estoy aquiiii');
   const gruposki = await pool.query('SELECT grupo from personas where personas.rut = ?', [req.session.passport.user]);
-  console.log(gruposki[0].grupo);
-  const cantidadG = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Golondrinas" AND personas.grupo = ?', [gruposki[0].grupo]);
-  const cantidadL = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Lobatos" AND personas.grupo = ?', [gruposki[0].grupo]);
-  const cantidadC = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Compañia" AND personas.grupo = ?', [gruposki[0].grupo]);
-  const cantidadT = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Tropa" AND personas.grupo = ?', [gruposki[0].grupo]);
-  const cantidadA = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Avanzada" AND personas.grupo = ?', [gruposki[0].grupo]);
-  const cantidadCL = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Clan" AND personas.grupo = ?', [gruposki[0].grupo]);
-
-  console.log(datosProfile);
-  res.render('/profile', {datosProfile, cantidadG, cantidadL,cantidadC,cantidadT,cantidadA,cantidadCL});
+  console.log('esta persona pertenece al grupo....')
+  console.log(gruposki);
+  if(gruposki[0]==undefined)
+  {
+    res.redirect('/links');
+  }
+  else{
+    console.log(gruposki[0].grupo);
+    const cantidadG = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Golondrinas" AND personas.grupo = ?', [gruposki[0].grupo]);
+    const cantidadL = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Lobatos" AND personas.grupo = ?', [gruposki[0].grupo]);
+    const cantidadC = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Compañia" AND personas.grupo = ?', [gruposki[0].grupo]);
+    const cantidadT = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Tropa" AND personas.grupo = ?', [gruposki[0].grupo]);
+    const cantidadA = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Avanzada" AND personas.grupo = ?', [gruposki[0].grupo]);
+    const cantidadCL = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Clan" AND personas.grupo = ?', [gruposki[0].grupo]);
+    console.log(cantidadG);
+    console.log(cantidadL);
+    console.log(cantidadC);
+    console.log(cantidadT);
+    console.log(cantidadA);
+    console.log(cantidadCL);
+    console.log(datosProfile);
+    res.render('profile', {datosProfile, cantidadG, cantidadL,cantidadC,cantidadT,cantidadA,cantidadCL});
+  }
+  
 });
 
 module.exports = router;
