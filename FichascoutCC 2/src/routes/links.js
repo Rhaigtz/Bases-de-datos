@@ -205,17 +205,19 @@ router.get('/editMedica/:rut', async (req, res) => {
     console.log('hola llamaron a Editar Ficha medica....');
     console.log(rut);
     const rutedit = req.session.passport.user;
+    console.log(rutedit);
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [rut]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [rut]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [rut]);
-    if( rut==rutedit || rutedit == rutdir1 || rutedit == rutdir2 || rutedit == rutdir3 ){
+    if( rut==rutedit || rutedit == rutdir1 || rutdir2 || rutdir3 ){
         console.log('entre en el IF y soy dirigente o yo mismo....')
-        const editandoM = await pool.query('SELECT * FROM ficha WHERE ficha.rut = ?', [rutedit]);
+        const editandoM = await pool.query('SELECT * FROM ficha WHERE ficha.rut = ?', [rut]);
         console.log('holi');
         console.log(editandoM);
         res.render('links/editMedica', { editandoM });
     }
     else{
+        console.log('shao lo vimo');
         res.redirect('/profile');
     }
 });
