@@ -60,21 +60,27 @@
                 </div>
             </div>
             {{/each}}
-            {{#each datosProfile}}
             <div class="col-sm-6">
                 <div class="card-body">
                     <div class="form-group ">
                         <div class="h2">Tus Dirigentes a cargo</div>
                      </div>
+                    {{#each nombre_consulta1}}
                     <div align="left" class="p-2">
-                        <div class="h6">1.-   {{rut_dirigente1}} </div>
+                        <div class="h6">1.-  {{NOMBRE}} {{apellido}} </div>
                     </div>
+                    {{/each}}
+                    {{#each nombre_consulta2}}
                     <div align="left" class="p-2">
-                        <div class="h6">2.- {{rut_dirigente2}} </div>
+                        <div class="h6">2.- {{NOMBRE}} {{apellido}}</div>
                     </div>
+                    {{/each}}
+                    {{#each nombre_consulta3}}
                     <div align="left" class="p-2">
-                        <div class="h6">3.- {{rut_dirigente3}}</div>
+                        <div class="h6">3.- {{NOMBRE}} {{apellido}}</div>
                     </div>
+                    {{/each}}
+                    {{#each datosProfile}}
                     <div class="row">
                         <div class="mx-auto">
                             <a href="links/edit/{{rut}}" class="btn btn-warning btn-lg active mx-auto" role="button" aria-pressed="true">Editar Datos Personales</a>

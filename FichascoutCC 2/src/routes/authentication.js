@@ -46,28 +46,39 @@ router.get('/profile', isLoggedIn, async (req, res) => {
   const datosProfile = await pool.query('SELECT * FROM Personas WHERE personas.rut = ?',[req.session.passport.user]);
   console.log('estoy aquiiii');
   const gruposki = await pool.query('SELECT grupo from personas where personas.rut = ?', [req.session.passport.user]);
-  console.log('esta persona pertenece al grupo....')
-  console.log(gruposki);
-  if(gruposki[0]==undefined)
-  {
+  console.log('esta persona pertenece al grupo....');
+  if(datosProfile[0]== undefined){
     res.redirect('/links');
   }
   else{
-    console.log(gruposki[0].grupo);
-    const cantidadG = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Golondrinas" AND personas.grupo = ?', [gruposki[0].grupo]);
-    const cantidadL = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Lobatos" AND personas.grupo = ?', [gruposki[0].grupo]);
-    const cantidadC = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Compañia" AND personas.grupo = ?', [gruposki[0].grupo]);
-    const cantidadT = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Tropa" AND personas.grupo = ?', [gruposki[0].grupo]);
-    const cantidadA = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Avanzada" AND personas.grupo = ?', [gruposki[0].grupo]);
-    const cantidadCL = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Clan" AND personas.grupo = ?', [gruposki[0].grupo]);
-    console.log(cantidadG);
-    console.log(cantidadL);
-    console.log(cantidadC);
-    console.log(cantidadT);
-    console.log(cantidadA);
-    console.log(cantidadCL);
-    console.log(datosProfile);
-    res.render('profile', {datosProfile, cantidadG, cantidadL,cantidadC,cantidadT,cantidadA,cantidadCL});
+    const rut_dir1 = datosProfile[0].rut_dirigente1;
+    const rut_dir2 = datosProfile[0].rut_dirigente2;
+    const rut_dir3 = datosProfile[0].rut_dirigente3;
+    const nombre_consulta1 = await pool.query('SELECT personas.NOMBRE,personas.apellido FROM PERSONAS WHERE personas.RUT = ?', [rut_dir1]);
+    const nombre_consulta2 = await pool.query('SELECT personas.NOMBRE,personas.apellido FROM PERSONAS WHERE personas.RUT = ?', [rut_dir2]);
+    const nombre_consulta3 = await pool.query('SELECT personas.NOMBRE,personas.apellido FROM PERSONAS WHERE personas.RUT = ?', [rut_dir3]);
+    console.log('al menos llegue aca');
+    if(gruposki[0]==undefined )
+    {
+      res.redirect('/links');
+    } 
+    else{
+      console.log(gruposki[0].grupo);
+      const cantidadG = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Golondrinas" AND personas.grupo = ?', [gruposki[0].grupo]);
+      const cantidadL = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Lobatos" AND personas.grupo = ?', [gruposki[0].grupo]);
+      const cantidadC = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Compañia" AND personas.grupo = ?', [gruposki[0].grupo]);
+      const cantidadT = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Tropa" AND personas.grupo = ?', [gruposki[0].grupo]);
+      const cantidadA = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Avanzada" AND personas.grupo = ?', [gruposki[0].grupo]);
+      const cantidadCL = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Clan" AND personas.grupo = ?', [gruposki[0].grupo]);
+      console.log(cantidadG);
+      console.log(cantidadL);
+      console.log(cantidadC);
+      console.log(cantidadT);
+      console.log(cantidadA);
+      console.log(cantidadCL);
+      console.log(datosProfile);
+      res.render('profile', {datosProfile, cantidadG, cantidadL,cantidadC,cantidadT,cantidadA,cantidadCL,nombre_consulta1,nombre_consulta2,nombre_consulta3});
+    }
   }
   
 });
