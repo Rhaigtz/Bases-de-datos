@@ -332,8 +332,59 @@ router.get('/medicamentos', isLoggedIn, async(req,res) =>{
     var rutDirigente = req.session.passport.user;
     console.log('La persona que Tiene la Secion abierta es....');
     console.log(rutDirigente);
-    var medi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.opcion="Medicamentos" AND Personas.rut_dirigente1=?;',[rutDirigente]);
+    var medi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.opcion="Medicamentos" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;',[rutDirigente, rutDirigente, rutDirigente]);
+    console.log('mostrando medicamentos')
     res.render('links/medicamentos', {medi});
+});
+
+//Para ver las alergias
+router.get('/alergias', isLoggedIn, async (req, res) => {
+    var rutDirigente = req.session.passport.user;
+    console.log('La persona que Tiene la Secion abierta es....');
+    console.log(rutDirigente);
+    var ale = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.opcion="Alergias" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;',[rutDirigente,rutDirigente,rutDirigente]);
+    console.log('mostrando alergias')
+    res.render('links/alergias', {ale});
+});
+
+//Para ver las intolerancias
+router.get('/intolerancias', isLoggedIn, async (req, res) => {
+    var rutDirigente = req.session.passport.user;
+    console.log('La persona que Tiene la Secion abierta es....');
+    console.log(rutDirigente);
+    var int = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.opcion="Intolerancia" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
+    console.log('mostrando alergias')
+    res.render('links/intolerancias', {int});
+});
+
+//Para ver las Enfermedades
+router.get('/enfermedades', isLoggedIn, async (req, res) => {
+    var rutDirigente = req.session.passport.user;
+    console.log('La persona que Tiene la Secion abierta es....');
+    console.log(rutDirigente);
+    var enf = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.opcion="Enfermedades" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
+    console.log('mostrando enfermedades')
+    res.render('links/enfermedades', {enf});
+});
+
+//Para ver los traumaticos
+router.get('/traumaticos', isLoggedIn, async (req, res) => {
+    var rutDirigente = req.session.passport.user;
+    console.log('La persona que Tiene la Secion abierta es....');
+    console.log(rutDirigente);
+    var tra = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.opcion="Traumatico" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
+    console.log('mostrando traumatismos')
+    res.render('links/traumaticos', {tra});
+});
+
+//Para ver problemas psicologicos
+router.get('/psicologicos', isLoggedIn, async (req, res) => {
+    var rutDirigente = req.session.passport.user;
+    console.log('La persona que Tiene la Secion abierta es....');
+    console.log(rutDirigente);
+    var psi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.opcion="Psicologico" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
+    console.log('mostrando patologias psicologicas')
+    res.render('links/psicologicos', {psi});
 });
 
 module.exports = router;
