@@ -362,7 +362,7 @@ router.get('/enfermedades', isLoggedIn, async (req, res) => {
     var rutDirigente = req.session.passport.user;
     console.log('La persona que Tiene la Secion abierta es....');
     console.log(rutDirigente);
-    var enf = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Enfermedades" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
+    var enf = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Enfermedad" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
     console.log('mostrando enfermedades')
     res.render('links/enfermedades', {enf});
 });
