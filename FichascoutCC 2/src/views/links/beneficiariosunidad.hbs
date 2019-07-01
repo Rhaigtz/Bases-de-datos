@@ -1,48 +1,84 @@
-<div class="container p-4">
-    <div class="col">
-        <div class="col">
+
+<div class="col">
+    <div class="row p-4">
+        <div class="col-md-3">
+            {{#each unidadP}}
             <div class="card text-center">
+                <div class="card-header">
+                    <h3>{{unidad}}</h3>
+                </div>
+                <div>
+                    <img src="/img/{{unidad}}.jpg" alt="Logo Unidad" class="card-img-top mx-auto m-2 rounded-circle w-50" />
+                </div>
                 <div class="card-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col"><div class="h3">Rut</div></div>
-                            <div class="col"><div class="h3">Nombre</div></div>
-                            <div class="col"><div class="h3">Apellido</div></div>
-                            <div class="col"><div class="h3">Ciudad</div></div>
-                            <div class="col"><div class="h3">Poblacion</div></div>
-                            <div class="col"><div class="h3">Calle</div></div>
-                            <div class="col"><div class="h3">Numero</div></div>
-                        </div>
+                    <div class="form-group">
+                        <div class="h5">Grupo:{{grupo}}</div>
                     </div>
+                    <div class="form-group">
+                        <div class="h5">Distrito:{{distrito}} </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="h5">Perteneciente a la Region: "{{num_region}}"  {{region}} </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th colspan="2">Cantidad de Participantes en {{unidad}}</th>
+                            </tr>
+                        </thead>
+            {{/each}}
+                        <tbody>
+                            {{#each cantidadUnidad}}
+                            <tr class="table-info">
+                                <td colspan="1">Tu Grupo</th>
+                                <td colspan="1">{{total}}</td>
+                            </tr>
+                            {{/each}}
+                            {{#each cantidadDistrito}}
+                            <tr class="table-success">
+                                <td colspan="1">Tu Distrito</th>
+                                <td colspan="1">{{total}}</td>
+                            </tr>
+                            {{/each}}
+                            {{#each cantidadRegion}}
+                            <tr class="table-danger">
+                                <td colspan="1">Tu Region</th>
+                                <td colspan="1">{{total}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        {{#each links}}
-        <div class="col">
-            <div class="card text-center">
-                <div class="card-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">{{rut}}</div>
-                            <div class="col">{{nombre}}</div>
-                            <div class="col">{{apellido}}</div>
-                            <div class="col">{{ciudad}}</div>
-                            <div class="col">{{poblacion}}</div>
-                            <div class="col">{{calle}}</div>
-                            <div class="col">{{numero_c}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{else}}
-        <div class="col mx-auto">
-            <div class="card card-body text-center">
-                <h2>No Eres Dirigente....</h2>
-                <img src="/img/malandrin.png" alt="Logo Unidad" width="786" height="353"  />
-                <a href="/links">Volver</a>
-            </div>
-        </div>
-        {{/each}}
+        <div class="col-md-9">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Rut</th>
+                        <th>Ciudad</th>
+                        <th>Poblacion</th>
+                        <th>Calle</th>
+                        <th>Numero</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each links}}
+                    <tr>
+                        <td  class="table-success">{{nombre}} </td>
+                        <td  class="table-success">{{apellido}}</td>
+                        <td  class="table-warning">{{rut}}</td>
+                        <td  class="table-info">{{ciudad}}</td>
+                        <td  class="table-info">{{poblacion}}</td>
+                        <td  class="table-info">{{calle}}</td>
+                        <td  class="table-info">{{numero_c}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+
     </div>
 </div>
+

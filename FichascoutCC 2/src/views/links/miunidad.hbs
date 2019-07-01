@@ -1,64 +1,114 @@
-<div class="container p-4">
-    <div class="col">
-        <div class="col">
+<div class="col">
+    <div class="row p-4">
+        <div class="col-md-3">
+            {{#each unidadP}}
             <div class="card text-center">
+                <div class="card-header">
+                    <h3>Tu unidad Pricipal es{{unidad}}</h3>
+                </div>
+                <div>
+                    <img src="/img/{{unidad}}.jpg" alt="Logo Unidad" class="card-img-top mx-auto m-2 rounded-circle w-50" />
+                </div>
                 <div class="card-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col"><div class="h3">Rut</div></div>
-                            <div class="col"><div class="h3">Nombre</div></div>
-                            <div class="col"><div class="h3">Apellido</div></div>
-                            <div class="col"><div class="h3">Unidad</div></div>
-                            <div class="col"><div class="h3"></div></div>
-                        </div>
+                    <div class="form-group">
+                        <div class="h5">Grupo:{{grupo}}</div>
                     </div>
+                    <div class="form-group">
+                        <div class="h5">Distrito:{{distrito}} </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="h5">Perteneciente a la Region: "{{num_region}}"  {{region}} </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th colspan="2">Estas a cargo de:</th>
+                            </tr>
+                        </thead>
+            {{/each}}
+                        <tbody>
+                            {{#each cantidadClan}}
+                            <tr class="table-danger">
+                                <td colspan="1">Clan</th>
+                                <td colspan="1">{{total}}</td>
+                            </tr>
+                            {{else}}
+                            {{/each}}
+                            {{#each cantidadAvanzada}}
+                            <tr class="table-danger">
+                                <td colspan="1">Avanzada</th>
+                                <td colspan="1">{{total}}</td>
+                            </tr>
+                            {{else}}
+                            {{/each}}
+                            {{#each cantidadCompañia}}
+                            <tr class="table-info">
+                                <td colspan="1">Compañia</th>
+                                <td colspan="1">{{total}}</td>
+                            </tr>
+                            {{else}}
+                            {{/each}}
+                            {{#each cantidadTropa}}
+                            <tr class="table-success">
+                                <td colspan="1">Tropa</th>
+                                <td colspan="1">{{total}}</td>
+                            </tr>
+                            {{else}}
+                            {{/each}}
+                            {{#each cantidadGolondrinas}}
+                            <tr class="table-primary">
+                                <td colspan="1">Golondrinas</th>
+                                <td colspan="1">{{total}}</td>
+                            </tr>
+                            {{else}}
+                            {{/each}}
+                            {{#each cantidadLobatos}}
+                            <tr class="table-warning">
+                                <td colspan="1">Lobatos</th>
+                                <td colspan="1">{{total}}</td>
+                            </tr>
+                            {{else}}
+                            {{/each}}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        {{#each links}}
-        <div class="col">
-            <div class="card text-center">
-                <div class="card-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">{{rut}}</div>
-                            <div class="col">{{nombre}}</div>
-                            <div class="col">{{apellido}}</div>
-                            <div class="col">{{unidad}}</div>
-                            <a class="btn btn-info" href="/links/ficha/{{rut}}">
-                                Mirar Ficha
-                            </a>
-                            <a class="btn btn-warning" href="/links/editMedica/{{rut}}">
-                                Editar Ficha
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-9">
+            <table class="table table-bordered">
+                <thead class="thead-dark" align="center">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Rut</th>
+                        <th>Unidad</th>
+                        <th>Mirar // Editar</th>
+                    </tr>
+                </thead>
+                <tbody align="center">
+                    {{#each links}}
+                    <tr>
+                        <td  class="table-success">{{nombre}} </td>
+                        <td  class="table-success">{{apellido}}</td>
+                        <td  class="table-warning">{{rut}}</td>
+                        <td  class="table-info">{{unidad}}</td>
+                        <td  class="table-info">
+                            <div class="row">
+                                <div class="mx-auto">
+                                    <a class="btn btn-info" href="/links/ficha/{{rut}}">
+                                        Mirar Ficha
+                                    </a>
+                                    <a class="btn btn-warning" href="/links/editMedica/{{rut}}">
+                                        Editar Ficha
+                                    </a>
+                                </div>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
         </div>
-        {{else}}
-        <div class="col mx-auto">
-            <div class="card card-body text-center">
-                <div class="row">
-                    <div class="mx-auto " align="center">
-                        <h2 align="center">No eres Dirigente.....</h2>
-                    </div>
-                    
-                </div>
-                <div class="row">
-                    <div class="mx-auto">
-                        <img src="/img/malandrin.jpg" alt="Logo Unidad" width="786" height="353" align="center" />
-                    </div>
-                    
-                </div>
-                <div class="row">
-                    <div class="mx-auto p-3">
-                        <a class="btn btn-warning" href="/profile">Volver a mi Perfil</a>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-        {{/each}}
     </div>
 </div>

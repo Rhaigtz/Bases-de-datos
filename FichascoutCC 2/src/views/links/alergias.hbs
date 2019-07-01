@@ -13,11 +13,19 @@
             </div>
             <div class="row p-4">
                 <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th colspan="1">Nombre</th>
+                            <th colspan="1">RUT</th>
+                            <th colspan="2">Lista Intolerancias</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         {{#each ale}}
                         <tr>
-                            <td colspan="2">Nombre: {{nombre}} RUT: {{rut}}</td>
-                            <td colspan="2">{{especifique}}</td>
+                            <td colspan="1" class="table-success">{{nombre}} </td>
+                            <td colspan="1" class="table-warning">{{rut}}</td>
+                            <td colspan="2" class="table-info">{{especifique}}</td>
                         </tr>
                         {{/each}}
                     </tbody>

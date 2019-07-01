@@ -87,10 +87,24 @@ router.post('/addMedica', async (req, res) => {
 // para mostrar las personas de mi unidad
 router.get('/miunidad', isLoggedIn, async (req, res) => {
     console.log('buenas');
-    console.log(req.session.passport.user);
-    const links = await pool.query('SELECT * FROM Personas WHERE personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?', [req.session.passport.user, req.session.passport.user, req.session.passport.user]);
+    var yo = req.session.passport.user;
+    console.log(yo);
+    const links = await pool.query('SELECT * FROM Personas WHERE personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?', [yo, yo, yo]);
     console.log(links);
-    res.render('links/miunidad', { links });
+    var unidadP = await pool.query('SELECT * FROM Personas, region WHERE personas.distrito = region.distrito_nombre AND personas.rut = ?',[yo]);
+    var cantidadClan = await pool.query('SELECT count(*) as total from personas where personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ? AND personas.unidad = "Clan" AND personas.grupo = ?', [yo, yo, yo, links[0].grupo]);
+    console.log(cantidadClan);
+    var cantidadAvanzada = await pool.query('SELECT count(*) as total from personas where personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ? AND personas.unidad = "Avanzada" AND personas.grupo = ?', [yo, yo, yo, links[0].grupo]);
+    console.log(cantidadAvanzada);
+    var cantidadCompañia = await pool.query('SELECT count(*) as total from personas where personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ? AND personas.unidad = "Compañia" AND personas.grupo = ?', [yo, yo, yo, links[0].grupo]);
+    console.log(cantidadCompañia);
+    var cantidadTropa = await pool.query('SELECT count(*) as total from personas where personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ? AND personas.unidad = "Tropa" AND personas.grupo = ?', [yo, yo, yo, links[0].grupo]);
+    console.log(cantidadTropa);
+    var cantidadLobatos = await pool.query('SELECT count(*) as total from personas where personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ? AND personas.unidad = "Lobatos" AND personas.grupo = ?', [yo, yo, yo, links[0].grupo]);
+    console.log(cantidadLobatos);
+    var cantidadGolondrinas = await pool.query('SELECT count(*) as total from (Select personas.rut from personas Where personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ? AND personas.unidad = "Golondrinas" AND personas.grupo = ?) as contador Group by contador.rut', [yo, yo, yo, links[0].grupo]);
+    console.log(cantidadGolondrinas);
+    res.render('links/miunidad', { links, unidadP, cantidadClan, cantidadAvanzada, cantidadCompañia, cantidadTropa, cantidadLobatos, cantidadGolondrinas});
 });
 // despues para mirar su ficha
 router.get('/ficha/:id', isLoggedIn, async (req, res) => {
@@ -268,12 +282,21 @@ router.post('/editMedica/:rut', async (req, res) => {
 router.get('/beneficiariosunidad', isLoggedIn, async (req, res) => {
     var yo = req.session.passport.user;
     var misdatos = await pool.query('SELECT * FROM personas WHERE personas.rut = ?', [yo]);
+    var miregion = await pool.query('SELECT region.region FROM personas, region WHERE personas.rut = ? AND personas.distrito = region.distrito_nombre', [yo]);
+    console.log('Mi region es....');
+    console.log(miregion);
+    console.log('Mis Datos son....');
     console.log(misdatos);
     console.log('ahora mi ciudad es');
     console.log(misdatos[0].ciudad);
     const links = await pool.query('SELECT * FROM Personas WHERE personas.ciudad_grupo = ? AND personas.grupo = ? AND personas.unidad = ?',[misdatos[0].ciudad_grupo, misdatos[0].grupo, misdatos[0].unidad]);
     console.log(links);
-    res.render('links/beneficiariosunidad', { links });
+    var unidadP = await pool.query('SELECT * FROM Personas, region WHERE personas.distrito = region.distrito_nombre AND personas.rut = ?',[yo]);
+    console.log(unidadP);
+    const cantidadUnidad = await pool.query('SELECT count(*) as total from personas where personas.unidad = ? AND personas.grupo = ?', [misdatos[0].unidad, misdatos[0].grupo]);
+    const cantidadDistrito = await pool.query('SELECT count(*) as total from personas where personas.unidad = ? AND personas.distrito = ?', [misdatos[0].unidad, misdatos[0].distrito]);
+    const cantidadRegion = await pool.query('SELECT count(*) as total from personas, region where personas.distrito = region.distrito_nombre AND personas.unidad = ? AND region.region = ?', [misdatos[0].unidad, miregion[0].region]);
+    res.render('links/beneficiariosunidad', { links, unidadP, cantidadDistrito, cantidadUnidad, cantidadRegion });
 });
 
 router.get('/addExtra', async (req, res) => {
