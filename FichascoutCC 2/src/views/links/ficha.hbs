@@ -45,11 +45,15 @@
                         </tr>
                         <tr>
                             <td colspan="2">Prevision: {{prevision}}</td>
-                            <td colspan="2">Nombre Prevision: {{prevision}}</td>
+                            <td colspan="2">Grupo de Prevision: {{grupo_prevision}}</td>
                         </tr>
                         <tr>
                             <td colspan="2">Seguro Complementario Salud o Escolar: {{seguro}}</td>
                             <td colspan="2">Institucion: {{institucion}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Contacto Medico: {{nombre_medi}}</td>
+                            <td colspan="2">Telefono Medico: {{contacto_medi}}</td>
                         </tr>
                         <tr>
                             <td colspan="2">Fecha Ultimo Control Dental: {{fecha_u_cd}}</td>
@@ -106,6 +110,21 @@
 {{#each psi}}
                         <tr>
                             <td colspan="1" class="table-primary">{{tipo}}</th>
+                            <td colspan="1">Tipo: {{opcion}}</td>
+                            <td colspan="3">Especificacion: {{especifique}}</td>
+                        </tr>
+{{else}}
+{{/each}}
+{{#each ope}}
+                        <tr>
+                            <td colspan="1" class="table-danger">Haz tenido una: {{opcion}}</td>
+                            <td colspan="3">Especificacion: {{especifique}}</td>
+                        </tr>
+{{else}}
+{{/each}}
+{{#each con}}
+                        <tr>
+                            <td colspan="1" class="table-warning">{{tipo}}</th>
                             <td colspan="1">Tipo: {{opcion}}</td>
                             <td colspan="3">Especificacion: {{especifique}}</td>
                         </tr>

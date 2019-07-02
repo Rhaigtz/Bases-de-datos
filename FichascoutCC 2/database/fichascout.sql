@@ -51,11 +51,13 @@ CREATE TABLE Personas (
 CREATE TABLE Ficha (
     rut VARCHAR(60) NOT NULL UNIQUE,
     sangre VARCHAR(60) NOT NULL,
+    sangregrupo VARCHAR NOT NULL,
     telefono_eme VARCHAR(60) NOT NULL,
     nombre_tel_eme VARCHAR(60) NOT NULL,
     estatura VARCHAR(60) NOT NULL,
     peso VARCHAR(60) NOT NULL,
     prevision VARCHAR(60) NOT NULL,
+    grupo_prevision VARCHAR(60) NOT NULL,
     seguro VARCHAR(60) NOT NULL,
     institucion VARCHAR(60) NOT NULL,
     fecha_u_cd VARCHAR(60) ,

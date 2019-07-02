@@ -62,21 +62,26 @@ router.get('/addMedica', async (req, res) => {
 
 router.post('/addMedica', async (req, res) => {
     rutt1 =  req.session.passport.user;
-    const { sangre, telefono_eme, nombre_tel_eme, estatura, peso, prevision, seguro, institucion, fecha_u_cd, contacto_medi, nombre_medi, consultorio } = req.body;
+    const { sangre, sangregrupo, telefono_eme, nombre_tel_eme, estatura, peso, prevision, grupo_prevision, seguro, institucion, fecha_u_cd, contacto_medi, nombre_medi, consultorio, embarazada, embarazo_ant, fur } = req.body;
     const newDatosficha = {
         rut: rutt1,
         sangre,
+        sangregrupo,
         telefono_eme,
         nombre_tel_eme,
         estatura,
         peso,
         prevision,
+        grupo_prevision,
         seguro,
         institucion,
         fecha_u_cd,
         contacto_medi,
         nombre_medi,
-        consultorio
+        consultorio,
+        embarazada,
+        embarazo_ant, 
+        fur
     };
     await pool.query('INSERT INTO ficha set ?', [newDatosficha]);
     req.flash('success', 'Link Saved Successfully');
@@ -128,15 +133,17 @@ router.get('/ficha/:id', isLoggedIn, async (req, res) => {
     console.log(dir2);
     var dir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
     console.log(dir3);
-    if (rutDirigente == id || dir1 || dir2 || dir3) {
+    if (rutDirigente == id || rutDirigente == dir1 || rutDirigente == dir2 || rutDirigente == dir3) {
         console.log('Si tienes Acceso a esta persona....');
         var links = await pool.query('SELECT * FROM personas, ficha WHERE personas.rut = ficha.rut AND personas.rut = ?', [id]);
         var medi = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Medicamentos"', [id]);
         var ale = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Alergias"', [id]);
         var int = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Intolerancia"', [id]);
         var enf = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Enfermedad"', [id]);
-        var tra = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Traumatico"', [id]);
+        var tra = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Lesion"', [id]);
         var psi = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Psicologico"', [id]);
+        var ope = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Operacion/Cirugia"', [id]);
+        var con = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Habito/Consumo"', [id]);
     }
     else{
         console.log('no tengo derechos de entrar');
@@ -144,7 +151,7 @@ router.get('/ficha/:id', isLoggedIn, async (req, res) => {
     }
     console.log('holi voy a ver la ficha de mis scouts');
     console.log(links);
-    if(links == null)
+    if(links[0] == null)
     {
         console.log('Te redireccionamos ya que no tienes gente a cargo');
         res.redirect('/profile');
@@ -152,7 +159,7 @@ router.get('/ficha/:id', isLoggedIn, async (req, res) => {
     }
     else{
         console.log('Los datos de Tu Scout Son');
-        res.render('links/ficha', { links, medi, ale, int, enf, tra, psi });
+        res.render('links/ficha', { links, medi, ale, int, enf, tra, psi, ope, con });
     }
 });
 
@@ -170,7 +177,7 @@ router.get('/delete/:id', async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if(id==rutedit || rutdir1 || rutdir2 || rutdir3)
+    if(id==rutedit || rutedit == rutdir1 || rutedit == rutdir2 || rutedit == rutdir3)
     {
         console.log('tienes lo permisos');
         console.log('procederemos a borrar');
@@ -190,7 +197,7 @@ router.get('/edit/:id', async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if(id==rutedit || rutdir1 || rutdir2 || rutdir3)
+    if( id == rutedit || rutedit == rutdir1 || rutedit == rutdir2 || rutedit == rutdir3)
     {
         console.log('entre en el IF y soy dirigente o yo mismo....')
         const editando = await pool.query('SELECT * FROM personas WHERE personas.rut = ?', [rutedit]);
@@ -243,7 +250,7 @@ router.get('/editMedica/:rut', async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [rut]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [rut]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [rut]);
-    if( rut==rutedit || rutdir1 || rutdir2 || rutdir3 ){
+    if( rut == rutedit || rutedit == rutdir1 || rutedit == rutdir2 || rutedit == rutdir3 ){
         console.log('entre en el IF y soy dirigente o yo mismo....')
         const editandoM = await pool.query('SELECT * FROM ficha WHERE ficha.rut = ?', [rut]);
         console.log('holi');
@@ -262,21 +269,26 @@ router.post('/editMedica/:rut', async (req, res) => {
     console.log(rut);
     var rutt = rut;
     console.log(rutt);
-    const { sangre, telefono_eme, nombre_tel_eme, estatura, peso, prevision, seguro, institucion, fecha_u_cd, contacto_medi, nombre_medi, consultorio } = req.body;
+    const { sangre, sangregrupo, telefono_eme, nombre_tel_eme, estatura, peso, prevision, grupo_prevision, seguro, institucion, fecha_u_cd, contacto_medi, nombre_medi, consultorio, embarazada, embarazo_ant, fur } = req.body;
     const newDatosfichaE = {
         rut: rutt,
         sangre,
+        sangregrupo,
         telefono_eme,
         nombre_tel_eme,
         estatura,
         peso,
         prevision,
+        grupo_prevision,
         seguro,
         institucion,
         fecha_u_cd,
         contacto_medi,
         nombre_medi,
-        consultorio
+        consultorio,
+        embarazada,
+        embarazo_ant, 
+        fur
     };
     console.log('los datos recibidos son.......');
     console.log(newDatosfichaE);
@@ -340,13 +352,23 @@ router.post('/addExtra', async (req, res) => {
     }
     if (opcion == 'Fractura' || opcion == 'Esguinse' || opcion == 'Luxacion' || opcion == 'Otra Traumatico')
     {
-        console.log('estoy en Traumatico');
-        tipoo= "Traumatico";
+        console.log('estoy en Lesion');
+        tipoo= "Lesion";
     }
     if(opcion == 'Psicologico')
     {
         console.log('estoy en Psicologico');
         tipoo= "Psicologico";
+    }
+    if(opcion == 'Cirugia' || opcion == 'Operacion')
+    {
+        console.log('estoy en Operacion/Cirugia');
+        tipoo= "Operacion/Cirugia";
+    }
+    if(opcion == 'Alcohol' || opcion == 'Drogas' || opcion == 'OtroHabitoConsumo')
+    {
+        console.log('estoy en Habito/Consumo');
+        tipoo= "Habito/Consumo";
     }
     if (opcion == undefined)
     {
@@ -366,8 +388,9 @@ router.post('/addExtra', async (req, res) => {
 });
 // Vamos a crear el filtrador en base a "miunidad"
 router.get('/filtrador', isLoggedIn, async (req, res) => {
+    var yo = req.session.passport.user;
     console.log(req.session.passport.user);
-    const links = await pool.query('SELECT * FROM Personas WHERE personas.rut_dirigente1 = ?', [req.session.passport.user]);
+    const links = await pool.query('SELECT * FROM Personas WHERE personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?', [yo, yo , yo]);
     console.log(links);
     res.render('links/filtrador', { links });
 });
@@ -379,7 +402,7 @@ router.get('/medicamentos', isLoggedIn, async(req,res) =>{
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
+    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
         var medi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Medicamentos" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
@@ -398,7 +421,7 @@ router.get('/alergias', isLoggedIn, async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
+    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
         var ale = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Alergias" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
@@ -417,7 +440,7 @@ router.get('/intolerancias', isLoggedIn, async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
+    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
         var int = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Intolerancia" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
@@ -436,7 +459,7 @@ router.get('/enfermedades', isLoggedIn, async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
+    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
         var enf = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Enfermedad" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
@@ -455,7 +478,7 @@ router.get('/traumaticos', isLoggedIn, async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
+    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
         var tra = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Traumatico" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
@@ -474,7 +497,7 @@ router.get('/psicologicos', isLoggedIn, async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
+    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
         var psi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Psicologico" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);

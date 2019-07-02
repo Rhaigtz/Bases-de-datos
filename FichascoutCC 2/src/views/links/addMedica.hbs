@@ -11,8 +11,17 @@
                                 <div class="col form-group">
                                     <label for="opcion">Tipo de Sangre</label>
                                     <select class="form-control" id="opcion" name="sangre">
-                                        <option>Positivo</option>
-                                        <option>Negativo</option>
+                                        <option>RH Positivo</option>
+                                        <option>RH Negativo</option>
+                                    </select>    
+                                </div>
+                                <div class="col form-group">
+                                    <label for="opcion">Grupo de Sangre</label>
+                                    <select class="form-control" id="opcion" name="sangregrupo">
+                                        <option>A</option>
+                                        <option>B</option>
+                                        <option>AB</option>
+                                        <option>0</option>
                                     </select>    
                                 </div>
                                 <div class="col form-group">
@@ -23,47 +32,86 @@
                                         <option>FFAA</option>
                                     </select>    
                                 </div>
+                                <div class="col form-group">
+                                    <label for="opcion">Grupo de Prevision</label>
+                                    <select class="form-control" id="opcion" name="grupo_prevision">
+                                        <optgroup label="Fonaza">
+                                            <option>A</option>
+                                            <option>B</option>
+                                            <option>C</option>
+                                            <option>D</option>
+                                        </optgroup>
+                                        <optgroup label="Isapre">
+                                            <option>Banmédica S.A.</option>
+                                            <option>Chuquicamata Ltda.</option>
+                                            <option>Colmena Golden Cross S.A.</option>
+                                            <option>Consalud S.A</option>
+                                            <option>Cruz Blanca S.A.</option>
+                                            <option>Cruz del Norte Ltda.</option>
+                                            <option>Nueva Masvida S.A.</option>
+                                            <option>Fundación Ltda.</option>
+                                            <option>Fusat Ltda.</option>
+                                            <option>Río Blanco Ltda.</option>
+                                            <option>San Lorenzo Ltda.</option>
+                                            <option>Vida Tres S.A.</option>
+                                        </optgroup>
+                                        <optgroup label="FF.AA.">
+                                            <option>DIPRECA</option>
+                                            <option>CAPRADENA</option>
+                                        </optgroup>
+                                    </select>    
+                                </div>
                             </div>
                         </div>
                         <div class="container">
                             <div class="row">
                                 <div class="col form-group">
-                                    <input type="text" name="estatura" class="form-control" placeholder="Estatura">
+                                    <label for="opcion">Tu Estatura</label>
+                                    <input type="text" name="estatura" class="form-control" placeholder="EJ: 1.72">
                                 </div>
                                 <div class="col form-group">
-                                    <input type="text" name="peso" class="form-control" placeholder="Peso Kg">
+                                    <label for="opcion">Tu peso en KG</label>
+                                    <input type="text" name="peso" class="form-control" placeholder="EJ: 78.9">
                                 </div>
                                 <div class="col form-group">
-                                    <input type="text" name="telefono_eme" class="form-control" placeholder="Telefono de Emergencia">
+                                    <label for="opcion">Nombre Telefono de Emergencia</label>
+                                    <input type="text" name="nombre_tel_eme" class="form-control" placeholder="Ej: Tus padres o Familiar">
                                 </div>
                                 <div class="col form-group">
-                                    <input type="text" name="nombre_tel_eme" class="form-control" placeholder="Nombre del telefono de Emergencia">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col form-group">
-                                    <input type="text" name="seguro" class="form-control" placeholder="Seguro">
-                                </div>
-                                <div class="col form-group">
-                                    <input type="text" name="institucion" class="form-control" placeholder="Institucion">
-                                </div>
-                                <div class="col form-group">
-                                    <input type="text" name="fecha_u_cd" class="form-control" placeholder="Fecha ultimo Control Dental">
+                                    <label for="opcion">Telefono de Emergencia</label>
+                                    <input type="text" name="telefono_eme" class="form-control" placeholder="EJ: +56969065588">
                                 </div>
                             </div>
                         </div>
                         <div class="container">
                             <div class="row">
                                 <div class="col form-group">
-                                    <input type="text" name="contacto_medi" class="form-control" placeholder="Contacto Medico">
+                                    <label for="opcion">Seguro</label>
+                                    <input type="text" name="seguro" class="form-control" placeholder="Ej: Scout">
                                 </div>
                                 <div class="col form-group">
-                                    <input type="text" name="nombre_medi" class="form-control" placeholder="Nombre del Medico">
+                                    <label for="opcion">Intitucion perteneciente</label>
+                                    <input type="text" name="institucion" class="form-control" placeholder="Ej: Colegio Menecianos">
                                 </div>
                                 <div class="col form-group">
-                                    <input type="text" name="consultorio" class="form-control" placeholder="Consultorio">
+                                    <label for="opcion">Fecha Ultimo Control Dental</label>
+                                    <input type="text" name="fecha_u_cd" class="form-control" placeholder="Ej: YYYY-MM-DD">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label for="opcion">Nombre de tu medico</label>
+                                    <input type="text" name="nombre_medi" class="form-control" placeholder="Ej: Dr Tulio">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="opcion">Numero de tu doctor</label>
+                                    <input type="text" name="contacto_medi" class="form-control" placeholder="Ej: +5698318454">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="opcion">A que Consultorio Perteneces?</label>
+                                    <input type="text" name="consultorio" class="form-control" placeholder="Ej: Elgueta">
                                 </div>
                             </div>
                         </div>
@@ -83,13 +131,12 @@
                                         <option>11</option> <option>12</option> <option>13</option> <option>14</option>  <option>15</option> <option>16</option> <option>17</option> <option>18</option> <option>19</option> <option>20</option>
                                         <option>21</option> <option>22</option> <option>23</option> <option>24</option>  <option>25</option> <option>26</option> <option>27</option> <option>28</option> <option>29</option> <option>30</option>
                                         <option>31</option> <option>32</option> <option>33</option> <option>34</option> <option>35</option> <option>36</option> <option>37</option> <option>38</option> <option>39</option> <option>40</option>
-                                        <option>41</option> <option>42</option> <option>43</option> <option>44</option> <option>45</option> <option>46</option> <option>47</option> <option>48</option> <option>49</option> <option>50</option>
-                                        <option>51</option> <option>52</option> 
+                                        <option>41</option> <option>42</option> 
                                     </select> 
                                 </div>
                                 <div class="col form-group">
                                     <label for="opcion">Haz tenido embarazo anteriores?</label>
-                                    <select class="form-control" id="opcion" name="embarazada">
+                                    <select class="form-control" id="opcion" name="embarazo_ant">
                                         <option>NO</option>
                                         <option>SI</option>
                                     </select> 
