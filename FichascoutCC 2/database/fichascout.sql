@@ -51,7 +51,7 @@ CREATE TABLE Personas (
 CREATE TABLE Ficha (
     rut VARCHAR(60) NOT NULL UNIQUE,
     sangre VARCHAR(60) NOT NULL,
-    sangregrupo VARCHAR NOT NULL,
+    sangregrupo VARCHAR(60) NOT NULL,
     telefono_eme VARCHAR(60) NOT NULL,
     nombre_tel_eme VARCHAR(60) NOT NULL,
     estatura VARCHAR(60) NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE Ficha (
     embarazada VARCHAR(60) DEFAULT 'NO',
     semanas VARCHAR(60) DEFAULT 'NO',
     embarazo_ant VARCHAR(2) DEFAULT 'NO',
-    fur DATE,
+    fur VARCHAR(60),
     PRIMARY KEY (rut)
 );
 

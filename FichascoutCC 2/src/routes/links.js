@@ -133,7 +133,7 @@ router.get('/ficha/:id', isLoggedIn, async (req, res) => {
     console.log(dir2);
     var dir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
     console.log(dir3);
-    if (rutDirigente == id || rutDirigente == dir1 || rutDirigente == dir2 || rutDirigente == dir3) {
+    if (rutDirigente == id || dir1 || dir2 || dir3) {
         console.log('Si tienes Acceso a esta persona....');
         var links = await pool.query('SELECT * FROM personas, ficha WHERE personas.rut = ficha.rut AND personas.rut = ?', [id]);
         var medi = await pool.query('SELECT * FROM especifique WHERE especifique.rut = ? AND especifique.tipo="Medicamentos"', [id]);
@@ -151,7 +151,7 @@ router.get('/ficha/:id', isLoggedIn, async (req, res) => {
     }
     console.log('holi voy a ver la ficha de mis scouts');
     console.log(links);
-    if(links[0] == null)
+    if(links == null)
     {
         console.log('Te redireccionamos ya que no tienes gente a cargo');
         res.redirect('/profile');
@@ -197,7 +197,7 @@ router.get('/edit/:id', async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if( id == rutedit || rutedit == rutdir1 || rutedit == rutdir2 || rutedit == rutdir3)
+    if( rutedit == id || rutedit == rutdir1 || rutedit == rutdir2 || rutedit == rutdir3)
     {
         console.log('entre en el IF y soy dirigente o yo mismo....')
         const editando = await pool.query('SELECT * FROM personas WHERE personas.rut = ?', [rutedit]);
@@ -206,6 +206,7 @@ router.get('/edit/:id', async (req, res) => {
         res.render('links/edit', { editando });
     }
     else{
+        console.log('No tienes los Permisos Necesarios.....')
         res.redirect('/profile');
     }
 });
@@ -250,7 +251,7 @@ router.get('/editMedica/:rut', async (req, res) => {
     const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [rut]);
     const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [rut]);
     const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [rut]);
-    if( rut == rutedit || rutedit == rutdir1 || rutedit == rutdir2 || rutedit == rutdir3 ){
+    if( rutedit == rut || rutdir1 || rutdir2 || rutdir3 ){
         console.log('entre en el IF y soy dirigente o yo mismo....')
         const editandoM = await pool.query('SELECT * FROM ficha WHERE ficha.rut = ?', [rut]);
         console.log('holi');
@@ -301,21 +302,28 @@ router.post('/editMedica/:rut', async (req, res) => {
 router.get('/beneficiariosunidad', isLoggedIn, async (req, res) => {
     var yo = req.session.passport.user;
     var misdatos = await pool.query('SELECT * FROM personas WHERE personas.rut = ?', [yo]);
-    var miregion = await pool.query('SELECT region.region FROM personas, region WHERE personas.rut = ? AND personas.distrito = region.distrito_nombre', [yo]);
-    console.log('Mi region es....');
-    console.log(miregion);
-    console.log('Mis Datos son....');
-    console.log(misdatos);
-    console.log('ahora mi ciudad es');
-    console.log(misdatos[0].ciudad);
-    const links = await pool.query('SELECT * FROM Personas WHERE personas.ciudad_grupo = ? AND personas.grupo = ? AND personas.unidad = ?',[misdatos[0].ciudad_grupo, misdatos[0].grupo, misdatos[0].unidad]);
-    console.log(links);
-    var unidadP = await pool.query('SELECT * FROM Personas, region WHERE personas.distrito = region.distrito_nombre AND personas.rut = ?',[yo]);
-    console.log(unidadP);
-    const cantidadUnidad = await pool.query('SELECT count(*) as total from personas where personas.unidad = ? AND personas.grupo = ?', [misdatos[0].unidad, misdatos[0].grupo]);
-    const cantidadDistrito = await pool.query('SELECT count(*) as total from personas where personas.unidad = ? AND personas.distrito = ?', [misdatos[0].unidad, misdatos[0].distrito]);
-    const cantidadRegion = await pool.query('SELECT count(*) as total from personas, region where personas.distrito = region.distrito_nombre AND personas.unidad = ? AND region.region = ?', [misdatos[0].unidad, miregion[0].region]);
-    res.render('links/beneficiariosunidad', { links, unidadP, cantidadDistrito, cantidadUnidad, cantidadRegion });
+    if(misdatos[0] == null)
+    {
+        res.redirect('/profile');
+    }
+    else{
+        var miregion = await pool.query('SELECT region.region FROM personas, region WHERE personas.rut = ? AND personas.distrito = region.distrito_nombre', [yo]);
+        console.log('Mi region es....');
+        console.log(miregion);
+        console.log('Mis Datos son....');
+        console.log(misdatos);
+        console.log('ahora mi ciudad es');
+        console.log(misdatos[0].ciudad);
+        const links = await pool.query('SELECT * FROM Personas WHERE personas.ciudad_grupo = ? AND personas.grupo = ? AND personas.unidad = ?',[misdatos[0].ciudad_grupo, misdatos[0].grupo, misdatos[0].unidad]);
+        console.log(links);
+        var unidadP = await pool.query('SELECT * FROM Personas, region WHERE personas.distrito = region.distrito_nombre AND personas.rut = ?',[yo]);
+        console.log(unidadP);
+        const cantidadUnidad = await pool.query('SELECT count(*) as total from personas where personas.unidad = ? AND personas.grupo = ?', [misdatos[0].unidad, misdatos[0].grupo]);
+        const cantidadDistrito = await pool.query('SELECT count(*) as total from personas where personas.unidad = ? AND personas.distrito = ?', [misdatos[0].unidad, misdatos[0].distrito]);
+        const cantidadRegion = await pool.query('SELECT count(*) as total from personas, region where personas.distrito = region.distrito_nombre AND personas.unidad = ? AND region.region = ?', [misdatos[0].unidad, miregion[0].region]);
+        res.render('links/beneficiariosunidad', { links, unidadP, cantidadDistrito, cantidadUnidad, cantidadRegion });
+    }
+    
 });
 
 router.get('/addExtra', async (req, res) => {
@@ -397,114 +405,96 @@ router.get('/filtrador', isLoggedIn, async (req, res) => {
 
 //Para ver los medicamentos
 router.get('/medicamentos', isLoggedIn, async(req,res) =>{
-    const { id } = req.params;
     const rutDirigente = req.session.passport.user;
-    const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
-    const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
-    const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
+    var medi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Medicamentos" AND (Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?)', [rutDirigente, rutDirigente, rutDirigente]);
+    if (medi[0] !== null) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
-        var medi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Medicamentos" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
         console.log('mostrando medicamentos')
         res.render('links/medicamentos', { medi });
     }
     else {
+        console.log('Te redireciono');
         res.redirect('/profile');
     }
 });
 
 //Para ver las alergias
 router.get('/alergias', isLoggedIn, async (req, res) => {
-    const { id } = req.params;
     const rutDirigente = req.session.passport.user;
-    const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
-    const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
-    const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
+    var ale = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Alergias" AND (Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?)', [rutDirigente, rutDirigente, rutDirigente]);
+    if (ale[0] !== null) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
-        var ale = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Alergias" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
-        console.log('mostrando alergias')
+        console.log('mostrando medicamentos')
         res.render('links/alergias', { ale });
     }
     else {
+        console.log('Te redireciono');
         res.redirect('/profile');
     }
 });
 
 //Para ver las intolerancias
 router.get('/intolerancias', isLoggedIn, async (req, res) => {
-    const { id } = req.params;
     const rutDirigente = req.session.passport.user;
-    const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
-    const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
-    const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
+    var int = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Intolerancia" AND (Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?)', [rutDirigente, rutDirigente, rutDirigente]);
+    if (int[0] !== null) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
-        var int = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Intolerancia" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
-        console.log('mostrando alergias')
+        console.log('mostrando medicamentos')
         res.render('links/intolerancias', { int });
     }
     else {
+        console.log('Te redireciono');
         res.redirect('/profile');
     }
 });
    
 //Para ver las Enfermedades
 router.get('/enfermedades', isLoggedIn, async (req, res) => {
-    const { id } = req.params;
     const rutDirigente = req.session.passport.user;
-    const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
-    const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
-    const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
+    var enf = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Enfermedad" AND (Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?)', [rutDirigente, rutDirigente, rutDirigente]);
+    if (enf[0] !== null) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
-        var enf = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Enfermedad" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
-        console.log('mostrando enfermedades')
+        console.log('mostrando medicamentos')
         res.render('links/enfermedades', { enf });
     }
     else {
+        console.log('Te redireciono');
         res.redirect('/profile');
     }
 });
 
 //Para ver los traumaticos
 router.get('/traumaticos', isLoggedIn, async (req, res) => {
-    const { id } = req.params;
     const rutDirigente = req.session.passport.user;
-    const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
-    const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
-    const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
+    var tra = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Lesion" AND (Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?)', [rutDirigente, rutDirigente, rutDirigente]);
+    if (tra[0] !== null) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
-        var tra = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Traumatico" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
-        console.log('mostrando traumatismos')
+        console.log('mostrando medicamentos')
         res.render('links/traumaticos', { tra });
     }
     else {
+        console.log('Te redireciono');
         res.redirect('/profile');
     }
 });
 
 //Para ver problemas psicologicos
 router.get('/psicologicos', isLoggedIn, async (req, res) => {
-    const { id } = req.params;
     const rutDirigente = req.session.passport.user;
-    const rutdir1 = await pool.query('SELECT personas.rut_dirigente1 FROM personas WHERE personas.rut = ?', [id]);
-    const rutdir2 = await pool.query('SELECT personas.rut_dirigente2 FROM personas WHERE personas.rut = ?', [id]);
-    const rutdir3 = await pool.query('SELECT personas.rut_dirigente3 FROM personas WHERE personas.rut = ?', [id]);
-    if (id == rutDirigente || rutDirigente == rutdir1 || rutDirigente == rutdir2 || rutDirigente == rutdir3) {
+    var psi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Psicologico" AND (Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?)', [rutDirigente, rutDirigente, rutDirigente]);
+    if (psi[0] !== null) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
-        var psi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Psicologico" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
-        console.log('mostrando patologias psicologicas')
+        console.log('mostrando medicamentos')
         res.render('links/psicologicos', { psi });
     }
     else {
+        console.log('Te redireciono');
         res.redirect('/profile');
     }
 });
