@@ -90,20 +90,22 @@ router.get('/miunidad', isLoggedIn, async (req, res) => {
     var yo = req.session.passport.user;
     console.log(yo);
     const links = await pool.query('SELECT * FROM Personas WHERE personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?', [yo, yo, yo]);
+    const gruposki = await pool.query('SELECT grupo from personas where personas.rut = ?', [yo]);
+    console.log(gruposki);
     console.log(links);
     if (links[0] !== undefined) {
         var unidadP = await pool.query('SELECT * FROM Personas, region WHERE personas.distrito = region.distrito_nombre AND personas.rut = ?',[yo]);
-        var cantidadClan = await pool.query('SELECT count(*) as total from personas where personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ? AND personas.unidad = "Clan" AND personas.grupo = ?', [yo, yo, yo, links[0].grupo]);
+        var cantidadClan = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Clan" AND personas.grupo = ?  AND (personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?)', [gruposki[0].grupo, yo, yo, yo]);
         console.log(cantidadClan);
-        var cantidadAvanzada = await pool.query('SELECT count(*) as total from personas where personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ? AND personas.unidad = "Avanzada" AND personas.grupo = ?', [yo, yo, yo, links[0].grupo]);
+        var cantidadAvanzada = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Avanzada" AND personas.grupo = ?  AND (personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?)', [gruposki[0].grupo, yo, yo, yo]);
         console.log(cantidadAvanzada);
-        var cantidadCompañia = await pool.query('SELECT count(*) as total from personas where personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ? AND personas.unidad = "Compañia" AND personas.grupo = ?', [yo, yo, yo, links[0].grupo]);
+        var cantidadCompañia = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Compañia" AND personas.grupo = ?  AND (personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?)', [gruposki[0].grupo, yo, yo, yo]);
         console.log(cantidadCompañia);
-        var cantidadTropa = await pool.query('SELECT count(*) as total from personas where personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ? AND personas.unidad = "Tropa" AND personas.grupo = ?', [yo, yo, yo, links[0].grupo]);
+        var cantidadTropa = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Tropa" AND personas.grupo = ?  AND (personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?)', [gruposki[0].grupo, yo, yo, yo]);
         console.log(cantidadTropa);
-        var cantidadLobatos = await pool.query('SELECT count(*) as total from personas where personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ? AND personas.unidad = "Lobatos" AND personas.grupo = ?', [yo, yo, yo, links[0].grupo]);
+        var cantidadLobatos = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Lobatos" AND personas.grupo = ?  AND (personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?)', [gruposki[0].grupo, yo, yo, yo]);
         console.log(cantidadLobatos);
-        var cantidadGolondrinas = await pool.query('SELECT count(*) as total from (Select personas.rut from personas Where personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ? AND personas.unidad = "Golondrinas" AND personas.grupo = ?) as contador Group by contador.rut', [yo, yo, yo, links[0].grupo]);
+        var cantidadGolondrinas = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Golondrinas" AND personas.grupo = ?  AND (personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?)', [gruposki[0].grupo, yo, yo, yo]);
         console.log(cantidadGolondrinas);
         res.render('links/miunidad', { links, unidadP, cantidadClan, cantidadAvanzada, cantidadCompañia, cantidadTropa, cantidadLobatos, cantidadGolondrinas});
     }
