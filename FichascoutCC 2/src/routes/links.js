@@ -93,7 +93,7 @@ router.get('/miunidad', isLoggedIn, async (req, res) => {
     const gruposki = await pool.query('SELECT grupo from personas where personas.rut = ?', [yo]);
     console.log(gruposki);
     console.log(links);
-    if (links[0] !== undefined) {
+    if (links[0] !== undefined && gruposki[0] !== undefined ) {
         var unidadP = await pool.query('SELECT * FROM Personas, region WHERE personas.distrito = region.distrito_nombre AND personas.rut = ?',[yo]);
         var cantidadClan = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Clan" AND personas.grupo = ?  AND (personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?)', [gruposki[0].grupo, yo, yo, yo]);
         console.log(cantidadClan);
@@ -107,7 +107,7 @@ router.get('/miunidad', isLoggedIn, async (req, res) => {
         console.log(cantidadLobatos);
         var cantidadGolondrinas = await pool.query('SELECT count(*) as total from personas where personas.unidad = "Golondrinas" AND personas.grupo = ?  AND (personas.rut_dirigente1 = ? OR personas.rut_dirigente2 = ? OR personas.rut_dirigente3 = ?)', [gruposki[0].grupo, yo, yo, yo]);
         console.log(cantidadGolondrinas);
-        res.render('links/miunidad', { links, unidadP, cantidadClan, cantidadAvanzada, cantidadCompañia, cantidadTropa, cantidadLobatos, cantidadGolondrinas});
+        res.render('links/miunidad', { links, unidadP, cantidadClan, cantidadAvanzada, cantidadCompañia, cantidadTropa, cantidadLobatos,cantidadGolondrinas});
     }
     else {
         res.redirect('/profile');
@@ -351,7 +351,7 @@ router.post('/addExtra', async (req, res) => {
     if (opcion == undefined)
     {
         console.log('estoy en Undefined');
-        console.log('Opcion no me llega valor')
+        console.log('Opcion no me llega valor');
     }
     const newEsp = {
         rut: rutt1,
@@ -382,7 +382,7 @@ router.get('/medicamentos', isLoggedIn, async(req,res) =>{
     if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
-        var medi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Medicamentos" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
+        var medi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Medicamentos" AND (Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?)', [rutDirigente, rutDirigente, rutDirigente]);
         console.log('mostrando medicamentos')
         res.render('links/medicamentos', { medi });
     }
@@ -401,7 +401,7 @@ router.get('/alergias', isLoggedIn, async (req, res) => {
     if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
-        var ale = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Alergias" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
+        var ale = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Alergias" AND (Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?)', [rutDirigente, rutDirigente, rutDirigente]);
         console.log('mostrando alergias')
         res.render('links/alergias', { ale });
     }
@@ -420,7 +420,7 @@ router.get('/intolerancias', isLoggedIn, async (req, res) => {
     if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
-        var int = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Intolerancia" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
+        var int = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Intolerancia" AND (Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?)', [rutDirigente, rutDirigente, rutDirigente]);
         console.log('mostrando alergias')
         res.render('links/intolerancias', { int });
     }
@@ -439,7 +439,7 @@ router.get('/enfermedades', isLoggedIn, async (req, res) => {
     if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
-        var enf = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Enfermedad" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
+        var enf = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Enfermedad" AND (Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?)', [rutDirigente, rutDirigente, rutDirigente]);
         console.log('mostrando enfermedades')
         res.render('links/enfermedades', { enf });
     }
@@ -458,7 +458,7 @@ router.get('/traumaticos', isLoggedIn, async (req, res) => {
     if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
-        var tra = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Traumatico" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
+        var tra = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Traumatico" AND (Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?)', [rutDirigente, rutDirigente, rutDirigente]);
         console.log('mostrando traumatismos')
         res.render('links/traumaticos', { tra });
     }
@@ -477,7 +477,7 @@ router.get('/psicologicos', isLoggedIn, async (req, res) => {
     if (id == rutDirigente || rutdir1 || rutdir2 || rutdir3) {
         console.log('La persona que Tiene la Secion abierta es....');
         console.log(rutDirigente);
-        var psi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Psicologico" AND Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?;', [rutDirigente, rutDirigente, rutDirigente]);
+        var psi = await pool.query('Select * From Especifique,Personas Where Personas.rut=Especifique.rut AND Especifique.tipo="Psicologico" AND (Personas.rut_dirigente1=? OR Personas.rut_dirigente2=? OR Personas.rut_dirigente3=?)', [rutDirigente, rutDirigente, rutDirigente]);
         console.log('mostrando patologias psicologicas')
         res.render('links/psicologicos', { psi });
     }
