@@ -12,7 +12,7 @@ insert into Region (distrito_nombre, region, num_region) values ('Colina', 'Metr
 insert into Region (distrito_nombre, region, num_region) values ('Cerro Tarapaca', 'Tarapaca', '1');
 insert into Region (distrito_nombre, region, num_region) values ('Cavancha Iquique', 'Tarapaca', '1');
 insert into Region (distrito_nombre, region, num_region) values ('Santiago Centro', 'Metropolitana', '13');
-insert into Region (distrito_nombre, region, num_region) values ('Peñañolen', 'Metropolitana', '13');
+insert into Region (distrito_nombre, region, num_region) values ('PeÃ±aÃ±olen', 'Metropolitana', '13');
 insert into Region (distrito_nombre, region, num_region) values ('Providencia', 'Metropolitana', '13');
 insert into Region (distrito_nombre, region, num_region) values ('Conchali', 'Metropolitana', '13');
 insert into Region (distrito_nombre, region, num_region) values ('Copayapu', 'Atacama', '3');
@@ -30,10 +30,10 @@ insert into Region (distrito_nombre, region, num_region) values ('Mapurayen', 'M
 insert into Region (distrito_nombre, region, num_region) values ('Marga Marga', 'Valparaiso', '5');
 insert into Region (distrito_nombre, region, num_region) values ('Michimalonco', 'Valparaiso', '5');
 insert into Region (distrito_nombre, region, num_region) values ('Nahuelbuta', 'BioBio', '8');
-insert into Region (distrito_nombre, region, num_region) values ('Ñielol', 'Araucania', '9');
+insert into Region (distrito_nombre, region, num_region) values ('Ã‘ielol', 'Araucania', '9');
 insert into Region (distrito_nombre, region, num_region) values ('O higgins', 'Libertador B.O.', '6');
 insert into Region (distrito_nombre, region, num_region) values ('Pedro de Valdivia', 'Metropolitana', '13');
-insert into Region (distrito_nombre, region, num_region) values ('Viña del Mar', 'Valparaiso', '5');
+insert into Region (distrito_nombre, region, num_region) values ('ViÃ±a del Mar', 'Valparaiso', '5');
 insert into Region (distrito_nombre, region, num_region) values ('Villa Alemana', 'Valparaiso', '5');
 insert into Region (distrito_nombre, region, num_region) values ('Valparaiso', 'Valparaiso', '5');
 insert into Region (distrito_nombre, region, num_region) values ('Valle del Maipo', 'Metropolitana', '13');
